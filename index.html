@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LeaveFlow - Employee Leave Management</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- LOGIN PROTECTION -->
+    <script>
+        // Dashboard cannot be opened without login
+        if (localStorage.getItem("leaveFlowLoggedIn") !== "true") {
+            window.location.href = "login.html";
+        }
+    </script>
+
+</head>
+
+<body>
+
+    <div class="app">
+
+        <!-- ================= SIDEBAR ================= -->
+
+        <aside class="sidebar" id="sidebar">
+
+            <div class="brand">
+
+                <div class="brand-icon">
+                    <i class="bi bi-calendar2-check"></i>
+                </div>
+
+                <div>
+                    <h4>LeaveFlow</h4>
+                    <span>HR Management</span>
+                </div>
+
+            </div>
+
+
+            <div class="menu-title">
+                MAIN MENU
+            </div>
+
+
+            <nav class="sidebar-menu">
+
+                <!-- Dashboard -->
+                <a href="index.html" class="menu-item active">
+                    <i class="bi bi-grid-1x2-fill"></i>
+                    <span>Dashboard</span>
+                </a>
+
+
+                <!-- Apply Leave -->
+                <a href="apply-leave.html" class="menu-item">
+                    <i class="bi bi-plus-circle"></i>
+                    <span>Apply Leave</span>
+                </a>
+
+
+                <!-- My Leaves -->
+                <a href="my-leaves.html" class="menu-item">
+                    <i class="bi bi-file-earmark-text"></i>
+                    <span>My Leaves</span>
+                </a>
+
+
+                <!-- Leave Calendar -->
+                <a href="calendar.html" class="menu-item">
+                    <i class="bi bi-calendar3"></i>
+                    <span>Leave Calendar</span>
+                </a>
+
+
+                <div class="menu-title mt-4">
+                    MANAGEMENT
+                </div>
+
+
+                <!-- Employees -->
+                <a href="employees.html" class="menu-item">
+                    <i class="bi bi-people"></i>
+                    <span>Employees</span>
+                </a>
+
+
+                <!-- Reports -->
+                <a href="reports.html" class="menu-item">
+                    <i class="bi bi-bar-chart"></i>
+                    <span>Reports</span>
+                </a>
+
+
+                <!-- Settings -->
+                <a href="settings.html" class="menu-item">
+                    <i class="bi bi-gear"></i>
+                    <span>Settings</span>
+                </a>
+
+            </nav>
+
+
+            <!-- SIDEBAR HELP -->
+
+            <div class="sidebar-bottom">
+
+                <div class="help-box">
+
+                    <div class="help-icon">
+                        <i class="bi bi-headset"></i>
+                    </div>
+
+                    <strong>Need Help?</strong>
+
+                    <small>
+                        Contact HR Support
+                    </small>
+
+                    <button onclick="contactSupport()">
+                        Get Support
+                    </button>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ================= MAIN CONTENT ================= -->
+
+        <main class="main">
+
+
+            <!-- ================= TOPBAR ================= -->
+
+            <header class="topbar">
+
+                <div class="top-left">
+
+                    <button class="mobile-menu" id="menuBtn">
+                        <i class="bi bi-list"></i>
+                    </button>
+
+
+                    <div class="page-heading">
+
+                        <h5>
+                            Dashboard
+                        </h5>
+
+                        <span>
+                            Monday, September 2, 2026
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="top-right">
+
+
+                    <!-- Search -->
+
+                    <button class="icon-btn" onclick="showSearchMessage()">
+
+                        <i class="bi bi-search"></i>
+
+                    </button>
+
+
+                    <!-- Notification -->
+
+                    <button class="icon-btn notification" onclick="showNotifications()">
+
+                        <i class="bi bi-bell"></i>
+
+                        <span></span>
+
+                    </button>
+
+
+                    <!-- PROFILE / LOGOUT -->
+
+                    <div class="profile" onclick="toggleProfileMenu()" style="cursor:pointer; position:relative;">
+
+                        <div class="avatar">
+                            SA
+                        </div>
+
+                        <div class="profile-info">
+
+                            <strong>
+                                Sadhana
+                            </strong>
+
+                            <small>
+                                Employee
+                            </small>
+
+                        </div>
+
+                        <i class="bi bi-chevron-down"></i>
+
+
+                        <!-- PROFILE DROPDOWN -->
+
+                        <div id="profileMenu" style="
+                            display:none;
+                            position:absolute;
+                            right:0;
+                            top:55px;
+                            width:190px;
+                            background:#ffffff;
+                            border-radius:12px;
+                            padding:8px;
+                            box-shadow:0 10px 30px rgba(0,0,0,0.15);
+                            z-index:1000;
+                            ">
+
+                            <a href="profile.html" style="
+                                display:block;
+                                padding:10px 12px;
+                                text-decoration:none;
+                                color:#333;
+                                border-radius:8px;
+                                ">
+
+                                <i class="bi bi-person me-2"></i>
+                                My Profile
+
+                            </a>
+
+
+                            <a href="settings.html" style="
+                                display:block;
+                                padding:10px 12px;
+                                text-decoration:none;
+                                color:#333;
+                                border-radius:8px;
+                                ">
+
+                                <i class="bi bi-gear me-2"></i>
+                                Settings
+
+                            </a>
+
+
+                            <hr style="margin:5px 0;">
+
+
+                            <button onclick="logoutUser()" style="
+                                width:100%;
+                                border:none;
+                                background:none;
+                                text-align:left;
+                                padding:10px 12px;
+                                color:#dc3545;
+                                border-radius:8px;
+                                ">
+
+                                <i class="bi bi-box-arrow-right me-2"></i>
+                                Logout
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- ================= CONTENT ================= -->
+
+            <section class="content">
+
+
+                <!-- ================= WELCOME ================= -->
+
+                <div class="welcome-section">
+
+                    <div>
+
+                        <span class="welcome-small">
+                            WELCOME BACK 👋
+                        </span>
+
+                        <h1>
+                            Good Morning, Sadhana!
+                        </h1>
+
+                        <p>
+                            Here's what's happening with your leave management today.
+                        </p>
+
+                    </div>
+
+
+                    <a href="apply-leave.html" class="apply-btn">
+
+                        <i class="bi bi-plus-lg"></i>
+
+                        Apply for Leave
+
+                    </a>
+
+                </div>
+
+
+                <!-- ================= STAT CARDS ================= -->
+
+                <div class="row g-4 mb-4">
+
+
+                    <!-- AVAILABLE LEAVE -->
+
+                    <div class="col-xl-3 col-md-6">
+
+                        <div class="stat-card">
+
+                            <div class="stat-top">
+
+                                <div class="stat-icon blue">
+
+                                    <i class="bi bi-calendar2-week"></i>
+
+                                </div>
+
+
+                                <span class="trend positive">
+
+                                    <i class="bi bi-arrow-up"></i>
+                                    12%
+
+                                </span>
+
+                            </div>
+
+
+                            <div class="stat-number">
+                                18
+                            </div>
+
+                            <div class="stat-label">
+                                Available Leave
+                            </div>
+
+
+                            <div class="progress-line">
+
+                                <div style="width:72%"></div>
+
+                            </div>
+
+
+                            <small>
+                                of 25 days annually
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- LEAVE TAKEN -->
+
+                    <div class="col-xl-3 col-md-6">
+
+                        <div class="stat-card">
+
+                            <div class="stat-top">
+
+                                <div class="stat-icon purple">
+
+                                    <i class="bi bi-clock-history"></i>
+
+                                </div>
+
+
+                                <span class="trend neutral">
+                                    This year
+                                </span>
+
+                            </div>
+
+
+                            <div class="stat-number">
+                                07
+                            </div>
+
+                            <div class="stat-label">
+                                Leave Taken
+                            </div>
+
+
+                            <div class="progress-line purple-line">
+
+                                <div style="width:28%"></div>
+
+                            </div>
+
+
+                            <small>
+                                28% of total allowance
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PENDING REQUESTS -->
+
+                    <div class="col-xl-3 col-md-6">
+
+                        <div class="stat-card">
+
+                            <div class="stat-top">
+
+                                <div class="stat-icon orange">
+
+                                    <i class="bi bi-hourglass-split"></i>
+
+                                </div>
+
+
+                                <span class="trend pending">
+                                    Pending
+                                </span>
+
+                            </div>
+
+
+                            <div class="stat-number">
+                                02
+                            </div>
+
+                            <div class="stat-label">
+                                Pending Requests
+                            </div>
+
+
+                            <div class="request-mini">
+
+                                <span>
+                                    Awaiting approval
+                                </span>
+
+                                <i class="bi bi-arrow-right"></i>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- APPROVED LEAVES -->
+
+                    <div class="col-xl-3 col-md-6">
+
+                        <div class="stat-card">
+
+                            <div class="stat-top">
+
+                                <div class="stat-icon green">
+
+                                    <i class="bi bi-check2-circle"></i>
+
+                                </div>
+
+
+                                <span class="trend positive">
+                                    92%
+                                </span>
+
+                            </div>
+
+
+                            <div class="stat-number">
+                                14
+                            </div>
+
+                            <div class="stat-label">
+                                Approved Leaves
+                            </div>
+
+
+                            <div class="request-mini">
+
+                                <span>
+                                    Approval rate
+                                </span>
+
+                                <i class="bi bi-arrow-up-right"></i>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= MIDDLE SECTION ================= -->
+
+                <div class="row g-4 mb-4">
+
+
+                    <!-- LEAVE BALANCE -->
+
+                    <div class="col-xl-7">
+
+                        <div class="dashboard-card">
+
+                            <div class="card-header-custom">
+
+                                <div>
+
+                                    <h5>
+                                        Leave Overview
+                                    </h5>
+
+                                    <p>
+                                        Your leave balance for 2026
+                                    </p>
+
+                                </div>
+
+
+                                <select class="period-select">
+
+                                    <option>
+                                        2026
+                                    </option>
+
+                                    <option>
+                                        2025
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="balance-wrapper">
+
+
+                                <div class="donut">
+
+                                    <div class="donut-inner">
+
+                                        <strong>
+                                            72%
+                                        </strong>
+
+                                        <span>
+                                            Remaining
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="balance-details">
+
+
+                                    <div class="balance-item">
+
+                                        <div class="balance-name">
+
+                                            <span class="dot annual"></span>
+
+                                            Annual Leave
+
+                                        </div>
+
+                                        <strong>
+                                            18 / 25
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div class="balance-item">
+
+                                        <div class="balance-name">
+
+                                            <span class="dot sick"></span>
+
+                                            Sick Leave
+
+                                        </div>
+
+                                        <strong>
+                                            8 / 10
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div class="balance-item">
+
+                                        <div class="balance-name">
+
+                                            <span class="dot casual"></span>
+
+                                            Casual Leave
+
+                                        </div>
+
+                                        <strong>
+                                            6 / 8
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div class="balance-item">
+
+                                        <div class="balance-name">
+
+                                            <span class="dot unpaid"></span>
+
+                                            Unpaid Leave
+
+                                        </div>
+
+                                        <strong>
+                                            0 / 5
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- UPCOMING HOLIDAYS -->
+
+                    <div class="col-xl-5">
+
+                        <div class="dashboard-card">
+
+                            <div class="card-header-custom">
+
+                                <div>
+
+                                    <h5>
+                                        Upcoming Holidays
+                                    </h5>
+
+                                    <p>
+                                        Don't miss important dates
+                                    </p>
+
+                                </div>
+
+
+                                <a href="calendar.html" class="view-link">
+
+                                    View all
+
+                                </a>
+
+                            </div>
+
+
+                            <div class="holiday-list">
+
+
+                                <!-- HOLIDAY 1 -->
+
+                                <div class="holiday-item">
+
+                                    <div class="date-box">
+
+                                        <strong>
+                                            05
+                                        </strong>
+
+                                        <span>
+                                            SEP
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="holiday-info">
+
+                                        <strong>
+                                            Teachers' Day
+                                        </strong>
+
+                                        <span>
+                                            Friday · Holiday
+                                        </span>
+
+                                    </div>
+
+
+                                    <i class="bi bi-calendar-event"></i>
+
+                                </div>
+
+
+                                <!-- HOLIDAY 2 -->
+
+                                <div class="holiday-item">
+
+                                    <div class="date-box">
+
+                                        <strong>
+                                            15
+                                        </strong>
+
+                                        <span>
+                                            SEP
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="holiday-info">
+
+                                        <strong>
+                                            Ganesh Chaturthi
+                                        </strong>
+
+                                        <span>
+                                            Monday · Holiday
+                                        </span>
+
+                                    </div>
+
+
+                                    <i class="bi bi-calendar-event"></i>
+
+                                </div>
+
+
+                                <!-- HOLIDAY 3 -->
+
+                                <div class="holiday-item">
+
+                                    <div class="date-box">
+
+                                        <strong>
+                                            02
+                                        </strong>
+
+                                        <span>
+                                            OCT
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="holiday-info">
+
+                                        <strong>
+                                            Gandhi Jayanti
+                                        </strong>
+
+                                        <span>
+                                            Thursday · Holiday
+                                        </span>
+
+                                    </div>
+
+
+                                    <i class="bi bi-calendar-event"></i>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= BOTTOM SECTION ================= -->
+
+                <div class="row g-4">
+
+
+                    <!-- RECENT REQUESTS -->
+
+                    <div class="col-xl-8">
+
+                        <div class="dashboard-card">
+
+                            <div class="card-header-custom">
+
+                                <div>
+
+                                    <h5>
+                                        Recent Leave Requests
+                                    </h5>
+
+                                    <p>
+                                        Track your latest leave applications
+                                    </p>
+
+                                </div>
+
+
+                                <a href="my-leaves.html" class="view-link">
+
+                                    View all
+
+                                </a>
+
+                            </div>
+
+
+                            <div class="table-responsive">
+
+                                <table class="table custom-table">
+
+
+                                    <thead>
+
+                                        <tr>
+
+                                            <th>
+                                                Leave Type
+                                            </th>
+
+                                            <th>
+                                                Duration
+                                            </th>
+
+                                            <th>
+                                                Days
+                                            </th>
+
+                                            <th>
+                                                Status
+                                            </th>
+
+                                        </tr>
+
+                                    </thead>
+
+
+                                    <tbody>
+
+
+                                        <!-- REQUEST 1 -->
+
+                                        <tr>
+
+                                            <td>
+
+                                                <div class="leave-name">
+
+                                                    <div class="table-icon blue-bg">
+
+                                                        <i class="bi bi-sun"></i>
+
+                                                    </div>
+
+
+                                                    <div>
+
+                                                        <strong>
+                                                            Annual Leave
+                                                        </strong>
+
+                                                        <small>
+                                                            Personal vacation
+                                                        </small>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </td>
+
+
+                                            <td>
+                                                Sep 10 - Sep 12
+                                            </td>
+
+
+                                            <td>
+                                                <strong>
+                                                    3 Days
+                                                </strong>
+                                            </td>
+
+
+                                            <td>
+
+                                                <span class="status approved">
+
+                                                    <i class="bi bi-check-circle-fill"></i>
+
+                                                    Approved
+
+                                                </span>
+
+                                            </td>
+
+                                        </tr>
+
+
+                                        <!-- REQUEST 2 -->
+
+                                        <tr>
+
+                                            <td>
+
+                                                <div class="leave-name">
+
+                                                    <div class="table-icon orange-bg">
+
+                                                        <i class="bi bi-heart-pulse"></i>
+
+                                                    </div>
+
+
+                                                    <div>
+
+                                                        <strong>
+                                                            Sick Leave
+                                                        </strong>
+
+                                                        <small>
+                                                            Medical leave
+                                                        </small>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </td>
+
+
+                                            <td>
+                                                Aug 28 - Aug 29
+                                            </td>
+
+
+                                            <td>
+                                                <strong>
+                                                    2 Days
+                                                </strong>
+                                            </td>
+
+
+                                            <td>
+
+                                                <span class="status pending-status">
+
+                                                    <i class="bi bi-clock-fill"></i>
+
+                                                    Pending
+
+                                                </span>
+
+                                            </td>
+
+                                        </tr>
+
+
+                                        <!-- REQUEST 3 -->
+
+                                        <tr>
+
+                                            <td>
+
+                                                <div class="leave-name">
+
+                                                    <div class="table-icon purple-bg">
+
+                                                        <i class="bi bi-house-heart"></i>
+
+                                                    </div>
+
+
+                                                    <div>
+
+                                                        <strong>
+                                                            Casual Leave
+                                                        </strong>
+
+                                                        <small>
+                                                            Personal work
+                                                        </small>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </td>
+
+
+                                            <td>
+                                                Aug 15 - Aug 15
+                                            </td>
+
+
+                                            <td>
+                                                <strong>
+                                                    1 Day
+                                                </strong>
+                                            </td>
+
+
+                                            <td>
+
+                                                <span class="status approved">
+
+                                                    <i class="bi bi-check-circle-fill"></i>
+
+                                                    Approved
+
+                                                </span>
+
+                                            </td>
+
+                                        </tr>
+
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUICK ACTIONS -->
+
+                    <div class="col-xl-4">
+
+                        <div class="dashboard-card quick-card">
+
+
+                            <div class="card-header-custom">
+
+                                <div>
+
+                                    <h5>
+                                        Quick Actions
+                                    </h5>
+
+                                    <p>
+                                        Frequently used options
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- APPLY -->
+
+                            <a href="apply-leave.html" class="quick-action">
+
+                                <div class="quick-icon blue">
+
+                                    <i class="bi bi-plus-lg"></i>
+
+                                </div>
+
+
+                                <div>
+
+                                    <strong>
+                                        Apply New Leave
+                                    </strong>
+
+                                    <span>
+                                        Submit a new leave request
+                                    </span>
+
+                                </div>
+
+
+                                <i class="bi bi-chevron-right"></i>
+
+                            </a>
+
+
+                            <!-- HISTORY -->
+
+                            <a href="my-leaves.html" class="quick-action">
+
+                                <div class="quick-icon purple">
+
+                                    <i class="bi bi-file-earmark-check"></i>
+
+                                </div>
+
+
+                                <div>
+
+                                    <strong>
+                                        View Leave History
+                                    </strong>
+
+                                    <span>
+                                        Check your previous requests
+                                    </span>
+
+                                </div>
+
+
+                                <i class="bi bi-chevron-right"></i>
+
+                            </a>
+
+
+                            <!-- CALENDAR -->
+
+                            <a href="calendar.html" class="quick-action">
+
+                                <div class="quick-icon green">
+
+                                    <i class="bi bi-calendar3"></i>
+
+                                </div>
+
+
+                                <div>
+
+                                    <strong>
+                                        Leave Calendar
+                                    </strong>
+
+                                    <span>
+                                        View team availability
+                                    </span>
+
+                                </div>
+
+
+                                <i class="bi bi-chevron-right"></i>
+
+                            </a>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- ================= BOOTSTRAP JS ================= -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+
+    <!-- ================= CUSTOM JS ================= -->
+
+    <script src="js/script.js">
+    </script>
+
+
+    <!-- ================= LOGIN / DASHBOARD SCRIPT ================= -->
+
+    <script>
+
+        // ------------------------------------
+        // PROFILE DROPDOWN
+        // ------------------------------------
+
+        function toggleProfileMenu() {
+
+            const menu = document.getElementById("profileMenu");
+
+            if (menu.style.display === "none" || menu.style.display === "") {
+
+                menu.style.display = "block";
+
+            } else {
+
+                menu.style.display = "none";
+
+            }
+
+        }
+
+
+        // ------------------------------------
+        // LOGOUT
+        // ------------------------------------
+
+        function logoutUser() {
+
+            const confirmLogout = confirm(
+                "Are you sure you want to logout?"
+            );
+
+            if (confirmLogout) {
+
+                localStorage.removeItem("leaveFlowLoggedIn");
+
+                window.location.href = "login.html";
+
+            }
+
+        }
+
+
+        // ------------------------------------
+        // SEARCH
+        // ------------------------------------
+
+        function showSearchMessage() {
+
+            alert(
+                "Search feature will be available soon."
+            );
+
+        }
+
+
+        // ------------------------------------
+        // NOTIFICATIONS
+        // ------------------------------------
+
+        function showNotifications() {
+
+            alert(
+                "You have 2 pending leave requests."
+            );
+
+        }
+
+
+        // ------------------------------------
+        // HR SUPPORT
+        // ------------------------------------
+
+        function contactSupport() {
+
+            alert(
+                "HR Support\n\nEmail: hr@leaveflow.com\nPhone: +91 98765 43210"
+            );
+
+        }
+
+
+        // ------------------------------------
+        // CLOSE PROFILE MENU
+        // WHEN CLICKING OUTSIDE
+        // ------------------------------------
+
+        document.addEventListener("click", function (event) {
+
+            const profile = document.querySelector(".profile");
+
+            const menu = document.getElementById("profileMenu");
+
+            if (
+                profile &&
+                menu &&
+                !profile.contains(event.target)
+            ) {
+
+                menu.style.display = "none";
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>

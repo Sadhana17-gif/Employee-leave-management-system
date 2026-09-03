@@ -1,0 +1,1844 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Reports - WorkEase</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: #f5f7fb;
+            color: #172033;
+        }
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: #111827;
+            color: white;
+            padding: 24px 16px;
+            z-index: 1000;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 10px 28px;
+        }
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .brand h4 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .brand small {
+            color: #9ca3af;
+            font-size: 10px;
+            letter-spacing: 1.5px;
+        }
+
+        .menu-title {
+            color: #6b7280;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 12px;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-menu li {
+            margin-bottom: 5px;
+        }
+
+        .nav-menu a {
+            color: #9ca3af;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 12px 13px;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: .25s;
+        }
+
+        .nav-menu a:hover {
+            background: #1f2937;
+            color: white;
+        }
+
+        .nav-menu a.active {
+            background: linear-gradient(90deg, #4f46e5, #6366f1);
+            color: white;
+            box-shadow: 0 8px 20px rgba(79, 70, 229, .25);
+        }
+
+        .sidebar-bottom {
+            position: absolute;
+            left: 16px;
+            right: 16px;
+            bottom: 20px;
+        }
+
+        .help-card {
+            background: #1b2433;
+            border: 1px solid #273244;
+            padding: 14px;
+            border-radius: 12px;
+        }
+
+        .help-card i {
+            color: #818cf8;
+        }
+
+        .help-card p {
+            margin: 7px 0 0;
+            color: #9ca3af;
+            font-size: 12px;
+        }
+
+        /* ================= MAIN ================= */
+
+        .main-content {
+            margin-left: 250px;
+            min-height: 100vh;
+        }
+
+        /* ================= TOPBAR ================= */
+
+        .topbar {
+            height: 72px;
+            background: white;
+            border-bottom: 1px solid #e8ebf0;
+            padding: 0 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 900;
+        }
+
+        .breadcrumb-area small {
+            color: #9ca3af;
+            font-size: 12px;
+        }
+
+        .breadcrumb-area h6 {
+            margin: 3px 0 0;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .search-mini {
+            width: 220px;
+            position: relative;
+        }
+
+        .search-mini i {
+            position: absolute;
+            left: 12px;
+            top: 10px;
+            color: #9ca3af;
+        }
+
+        .search-mini input {
+            width: 100%;
+            height: 38px;
+            border: 1px solid #e5e7eb;
+            border-radius: 9px;
+            padding-left: 37px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .search-mini input:focus {
+            border-color: #6366f1;
+        }
+
+        .notification {
+            width: 38px;
+            height: 38px;
+            border: 1px solid #e5e7eb;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .notification span {
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            background: #ef4444;
+            border-radius: 50%;
+            right: 7px;
+            top: 7px;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .profile-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .profile-info strong {
+            display: block;
+            font-size: 13px;
+        }
+
+        .profile-info small {
+            color: #9ca3af;
+            font-size: 11px;
+        }
+
+        /* ================= PAGE ================= */
+
+        .page {
+            padding: 30px;
+        }
+
+        .page-heading {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .page-heading h2 {
+            font-size: 25px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .page-heading p {
+            color: #8a94a6;
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .report-actions {
+            display: flex;
+            gap: 9px;
+        }
+
+        .btn-report {
+            border: 1px solid #e1e5eb;
+            background: white;
+            color: #596273;
+            padding: 9px 14px;
+            border-radius: 9px;
+            font-size: 12px;
+        }
+
+        .btn-report:hover {
+            border-color: #6366f1;
+            color: #6366f1;
+        }
+
+        .btn-export {
+            border: none;
+            background: #4f46e5;
+            color: white;
+            padding: 9px 15px;
+            border-radius: 9px;
+            font-size: 12px;
+        }
+
+        .btn-export:hover {
+            background: #4338ca;
+        }
+
+        /* ================= KPI ================= */
+
+        .kpi-card {
+            background: white;
+            border: 1px solid #e9ecf2;
+            border-radius: 14px;
+            padding: 20px;
+            height: 100%;
+            transition: .25s;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(15, 23, 42, .06);
+        }
+
+        .kpi-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .kpi-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .purple {
+            background: #eef2ff;
+            color: #4f46e5;
+        }
+
+        .green {
+            background: #ecfdf5;
+            color: #059669;
+        }
+
+        .orange {
+            background: #fff7ed;
+            color: #ea580c;
+        }
+
+        .red {
+            background: #fff1f2;
+            color: #e11d48;
+        }
+
+        .kpi-value {
+            font-size: 25px;
+            font-weight: 700;
+            margin-top: 17px;
+        }
+
+        .kpi-label {
+            color: #8a94a6;
+            font-size: 11px;
+        }
+
+        .growth {
+            font-size: 10px;
+            margin-top: 8px;
+        }
+
+        .growth.up {
+            color: #059669;
+        }
+
+        .growth.down {
+            color: #e11d48;
+        }
+
+        /* ================= REPORT CARD ================= */
+
+        .report-card {
+            background: white;
+            border: 1px solid #e9ecf2;
+            border-radius: 15px;
+            padding: 20px;
+            height: 100%;
+            box-shadow: 0 5px 20px rgba(15, 23, 42, .025);
+        }
+
+        .card-header-custom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .card-header-custom h5 {
+            font-size: 15px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .card-header-custom p {
+            color: #9ca3af;
+            font-size: 10px;
+            margin: 4px 0 0;
+        }
+
+        .period-select {
+            border: 1px solid #e2e6ec;
+            border-radius: 7px;
+            padding: 6px 9px;
+            font-size: 10px;
+            color: #667085;
+            outline: none;
+        }
+
+        /* ================= BAR CHART ================= */
+
+        .chart-wrapper {
+            height: 255px;
+            display: flex;
+            align-items: flex-end;
+            gap: 13px;
+            padding: 10px 5px 25px;
+            border-bottom: 1px solid #eef0f3;
+            position: relative;
+        }
+
+        .chart-wrapper::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 25%;
+            border-top: 1px dashed #edf0f4;
+        }
+
+        .chart-wrapper::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            border-top: 1px dashed #edf0f4;
+        }
+
+        .bar-group {
+            flex: 1;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .bars {
+            height: 90%;
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+        }
+
+        .bar {
+            width: 10px;
+            border-radius: 4px 4px 0 0;
+            transition: .3s;
+        }
+
+        .bar:hover {
+            opacity: .7;
+        }
+
+        .bar.approved {
+            background: #6366f1;
+        }
+
+        .bar.pending {
+            background: #c7d2fe;
+        }
+
+        .bar-label {
+            position: absolute;
+            bottom: -22px;
+            font-size: 9px;
+            color: #98a1b2;
+        }
+
+        /* ================= DONUT ================= */
+
+        .donut-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 28px;
+            min-height: 255px;
+        }
+
+        .donut {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: conic-gradient(#6366f1 0deg 180deg,
+                    #10b981 180deg 270deg,
+                    #f59e0b 270deg 324deg,
+                    #ef4444 324deg 360deg);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .donut::after {
+            content: "";
+            position: absolute;
+            width: 105px;
+            height: 105px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .donut-center {
+            position: absolute;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .donut-center strong {
+            display: block;
+            font-size: 23px;
+        }
+
+        .donut-center small {
+            color: #9ca3af;
+            font-size: 9px;
+        }
+
+        .legend-list {
+            min-width: 130px;
+        }
+
+        .legend-row {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-bottom: 13px;
+            font-size: 10px;
+            color: #687386;
+        }
+
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .legend-row strong {
+            margin-left: auto;
+            color: #273244;
+        }
+
+        .dot-purple {
+            background: #6366f1;
+        }
+
+        .dot-green {
+            background: #10b981;
+        }
+
+        .dot-yellow {
+            background: #f59e0b;
+        }
+
+        .dot-red {
+            background: #ef4444;
+        }
+
+        /* ================= DEPARTMENT ================= */
+
+        .department-row {
+            margin-bottom: 18px;
+        }
+
+        .department-top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 7px;
+        }
+
+        .department-top span {
+            font-size: 11px;
+            color: #667085;
+        }
+
+        .department-top strong {
+            font-size: 11px;
+        }
+
+        .department-progress {
+            height: 7px;
+            background: #f0f2f5;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .department-progress span {
+            display: block;
+            height: 100%;
+            border-radius: 20px;
+            background: linear-gradient(90deg, #6366f1, #818cf8);
+        }
+
+        /* ================= PERFORMANCE ================= */
+
+        .performance-box {
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        .performance-score {
+            width: 125px;
+            height: 125px;
+            border-radius: 50%;
+            margin: 5px auto 15px;
+            background: conic-gradient(#10b981 0deg 316deg,
+                    #e9eef2 316deg 360deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .performance-score::after {
+            content: "";
+            width: 93px;
+            height: 93px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .score-number {
+            z-index: 2;
+            font-size: 23px;
+            font-weight: 700;
+        }
+
+        .performance-box h6 {
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .performance-box p {
+            color: #9ca3af;
+            font-size: 10px;
+            margin: 0;
+        }
+
+        /* ================= ACTIVITY ================= */
+
+        .activity {
+            display: flex;
+            gap: 11px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f1f4;
+        }
+
+        .activity:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 32px;
+            height: 32px;
+            min-width: 32px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eef2ff;
+            color: #6366f1;
+            font-size: 13px;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-content p {
+            margin: 0;
+            font-size: 10px;
+            color: #667085;
+            line-height: 1.5;
+        }
+
+        .activity-content strong {
+            color: #273244;
+        }
+
+        .activity-content small {
+            color: #a0a8b6;
+            font-size: 9px;
+        }
+
+        /* ================= MOBILE ================= */
+
+        .mobile-menu {
+            display: none;
+            width: 36px;
+            height: 36px;
+            border: 1px solid #e5e7eb;
+            background: white;
+            border-radius: 8px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media(max-width:1100px) {
+
+            .sidebar {
+                width: 220px;
+            }
+
+            .main-content {
+                margin-left: 220px;
+            }
+
+            .search-mini {
+                display: none;
+            }
+
+            .donut-area {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+        }
+
+        @media(max-width:900px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+                transition: .3s;
+            }
+
+            .sidebar.show {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .mobile-menu {
+                display: flex;
+                margin-right: 10px;
+            }
+
+            .topbar {
+                padding: 0 18px;
+            }
+
+            .page {
+                padding: 20px 15px;
+            }
+
+            .page-heading {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+        }
+
+        @media(max-width:600px) {
+
+            .profile-info {
+                display: none;
+            }
+
+            .top-actions {
+                gap: 8px;
+            }
+
+            .page-heading h2 {
+                font-size: 21px;
+            }
+
+            .report-actions {
+                width: 100%;
+            }
+
+            .report-actions button {
+                flex: 1;
+            }
+
+            .chart-wrapper {
+                gap: 5px;
+            }
+
+            .bar {
+                width: 7px;
+            }
+
+            .donut {
+                width: 135px;
+                height: 135px;
+            }
+
+            .donut::after {
+                width: 90px;
+                height: 90px;
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                <i class="bi bi-calendar2-check"></i>
+            </div>
+
+            <div>
+                <h4>WorkEase</h4>
+                <small>EMPLOYEE PORTAL</small>
+            </div>
+
+        </div>
+
+
+        <div class="menu-title">Main Menu</div>
+
+        <ul class="nav-menu">
+
+            <li>
+                <a href="index.html">
+                    <i class="bi bi-grid-1x2-fill"></i>
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="apply-leave.html">
+                    <i class="bi bi-plus-circle"></i>
+                    Apply Leave
+                </a>
+            </li>
+
+            <li>
+                <a href="my-leaves.html">
+                    <i class="bi bi-file-earmark-text"></i>
+                    My Requests
+                </a>
+            </li>
+
+            <li>
+                <a href="calendar.html">
+                    <i class="bi bi-calendar3"></i>
+                    Team Calendar
+                </a>
+            </li>
+
+        </ul>
+
+
+        <div class="menu-title mt-3">Workspace</div>
+
+        <ul class="nav-menu">
+
+            <li>
+                <a href="employees.html">
+                    <i class="bi bi-people"></i>
+                    Employees
+                </a>
+            </li>
+
+            <li>
+                <a href="reports.html" class="active">
+                    <i class="bi bi-bar-chart"></i>
+                    Reports
+                </a>
+            </li>
+
+            <li>
+                <a href="settings.html">
+                    <i class="bi bi-gear"></i>
+                    Settings
+                </a>
+            </li>
+
+        </ul>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="help-card">
+
+                <i class="bi bi-headset"></i>
+
+                <p>
+                    Need help? Contact HR support for assistance.
+                </p>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="d-flex align-items-center">
+
+                <button class="mobile-menu" onclick="toggleSidebar()">
+                    <i class="bi bi-list"></i>
+                </button>
+
+                <div class="breadcrumb-area">
+
+                    <small>
+                        Workspace / Reports
+                    </small>
+
+                    <h6>
+                        Leave Analytics
+                    </h6>
+
+                </div>
+
+            </div>
+
+
+            <div class="top-actions">
+
+                <div class="search-mini">
+
+                    <i class="bi bi-search"></i>
+
+                    <input type="text" placeholder="Search...">
+
+                </div>
+
+
+                <div class="notification">
+
+                    <i class="bi bi-bell"></i>
+
+                    <span></span>
+
+                </div>
+
+
+                <div class="profile">
+
+                    <div class="profile-avatar">
+                        SA
+                    </div>
+
+                    <div class="profile-info">
+
+                        <strong>Sadhana</strong>
+
+                        <small>
+                            Employee
+                        </small>
+
+                    </div>
+
+                    <i class="bi bi-chevron-down small text-muted"></i>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= PAGE ================= -->
+
+        <section class="page">
+
+
+            <!-- HEADING -->
+
+            <div class="page-heading">
+
+                <div>
+
+                    <h2>
+                        Leave Analytics
+                    </h2>
+
+                    <p>
+                        Understand leave patterns and workforce availability.
+                    </p>
+
+                </div>
+
+
+                <div class="report-actions">
+
+                    <button class="btn-report">
+
+                        <i class="bi bi-calendar3 me-1"></i>
+
+                        2026
+
+                    </button>
+
+
+                    <button class="btn-export" onclick="exportReport()">
+
+                        <i class="bi bi-download me-1"></i>
+
+                        Export Report
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= KPI CARDS ================= -->
+
+            <div class="row g-3 mb-4">
+
+
+                <div class="col-xl-3 col-md-6">
+
+                    <div class="kpi-card">
+
+                        <div class="kpi-top">
+
+                            <div class="kpi-icon purple">
+                                <i class="bi bi-file-earmark-check"></i>
+                            </div>
+
+                            <i class="bi bi-three-dots text-muted"></i>
+
+                        </div>
+
+                        <div class="kpi-value">
+                            186
+                        </div>
+
+                        <div class="kpi-label">
+                            Total Leave Requests
+                        </div>
+
+                        <div class="growth up">
+                            <i class="bi bi-arrow-up"></i>
+                            12.5% from last year
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-xl-3 col-md-6">
+
+                    <div class="kpi-card">
+
+                        <div class="kpi-top">
+
+                            <div class="kpi-icon green">
+                                <i class="bi bi-check2-circle"></i>
+                            </div>
+
+                            <i class="bi bi-three-dots text-muted"></i>
+
+                        </div>
+
+                        <div class="kpi-value">
+                            142
+                        </div>
+
+                        <div class="kpi-label">
+                            Approved Requests
+                        </div>
+
+                        <div class="growth up">
+                            <i class="bi bi-arrow-up"></i>
+                            8.4% from last month
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-xl-3 col-md-6">
+
+                    <div class="kpi-card">
+
+                        <div class="kpi-top">
+
+                            <div class="kpi-icon orange">
+                                <i class="bi bi-hourglass-split"></i>
+                            </div>
+
+                            <i class="bi bi-three-dots text-muted"></i>
+
+                        </div>
+
+                        <div class="kpi-value">
+                            27
+                        </div>
+
+                        <div class="kpi-label">
+                            Pending Requests
+                        </div>
+
+                        <div class="growth down">
+                            <i class="bi bi-arrow-down"></i>
+                            4.2% from last month
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-xl-3 col-md-6">
+
+                    <div class="kpi-card">
+
+                        <div class="kpi-top">
+
+                            <div class="kpi-icon red">
+                                <i class="bi bi-x-circle"></i>
+                            </div>
+
+                            <i class="bi bi-three-dots text-muted"></i>
+
+                        </div>
+
+                        <div class="kpi-value">
+                            17
+                        </div>
+
+                        <div class="kpi-label">
+                            Rejected Requests
+                        </div>
+
+                        <div class="growth down">
+                            <i class="bi bi-arrow-down"></i>
+                            2.1% from last month
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= CHART ROW ================= -->
+
+            <div class="row g-4 mb-4">
+
+
+                <!-- MONTHLY TREND -->
+
+                <div class="col-lg-8">
+
+                    <div class="report-card">
+
+                        <div class="card-header-custom">
+
+                            <div>
+
+                                <h5>
+                                    Monthly Leave Trend
+                                </h5>
+
+                                <p>
+                                    Approved vs pending leave requests
+                                </p>
+
+                            </div>
+
+
+                            <select class="period-select" onchange="changePeriod(this.value)">
+
+                                <option value="2026">
+                                    2026
+                                </option>
+
+                                <option value="2025">
+                                    2025
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="chart-wrapper">
+
+                            <div class="bar-group">
+
+                                <div class="bars">
+                                    <div class="bar approved" style="height:70%"></div>
+                                    <div class="bar pending" style="height:25%"></div>
+                                </div>
+
+                                <span class="bar-label">Jan</span>
+
+                            </div>
+
+
+                            <div class="bar-group">
+
+                                <div class="bars">
+                                    <div class="bar approved" style="height:48%"></div>
+                                    <div class="bar pending" style="height:20%"></div>
+                                </div>
+
+                                <span class="bar-label">Feb</span>
+
+                            </div>
+
+
+                            <div class="bar-group">
+
+                                <div class="bars">
+                                    <div class="bar approved" style="height:60%"></div>
+                                    <div class="bar pending" style="height:30%"></div>
+                                </div>
+
+                                <span class="bar-label">Mar</span>
+
+                            </div>
+
+
+                            <div class="bar-group">
+
+                                <div class="bars">
+                                    <div class="bar approved" style="height:82%"></div>
+                                    <div class="bar pending" style="height:35%"></div>
+                                </div>
+
+                                <span class="bar-label">Apr</span>
+
+                            </div>
+
+
+                            <div class="bar-group">
+
+                                <div class="bars">
+                                    <div class="bar approved" style="height:55%"></div>
+                                    <div class="bar pending" style="height:22%"></div>
+                                </div>
+
+                                <span class="bar-label">May</span>
+
+                            </div>
+
+
+                            <div class="bar-group">
+
+                                <div class="bars">
+                                    <div class="bar approved" style="height:75%"></div>
+                                    <div class="bar pending" style="height:30%"></div>
+                                </div>
+
+                                <span class="bar-label">Jun</span>
+
+                            </div>
+
+
+                            <div class="bar-group">
+
+                                <div class="bars">
+                                    <div class="bar approved" style="height:68%"></div>
+                                    <div class="bar pending" style="height:25%"></div>
+                                </div>
+
+                                <span class="bar-label">Jul</span>
+
+                            </div>
+
+
+                            <div class="bar-group">
+
+                                <div class="bars">
+                                    <div class="bar approved" style="height:88%"></div>
+                                    <div class="bar pending" style="height:38%"></div>
+                                </div>
+
+                                <span class="bar-label">Aug</span>
+
+                            </div>
+
+
+                            <div class="bar-group">
+
+                                <div class="bars">
+                                    <div class="bar approved" style="height:65%"></div>
+                                    <div class="bar pending" style="height:27%"></div>
+                                </div>
+
+                                <span class="bar-label">Sep</span>
+
+                            </div>
+
+
+                            <div class="bar-group">
+
+                                <div class="bars">
+                                    <div class="bar approved" style="height:78%"></div>
+                                    <div class="bar pending" style="height:33%"></div>
+                                </div>
+
+                                <span class="bar-label">Oct</span>
+
+                            </div>
+
+
+                            <div class="bar-group">
+
+                                <div class="bars">
+                                    <div class="bar approved" style="height:52%"></div>
+                                    <div class="bar pending" style="height:19%"></div>
+                                </div>
+
+                                <span class="bar-label">Nov</span>
+
+                            </div>
+
+
+                            <div class="bar-group">
+
+                                <div class="bars">
+                                    <div class="bar approved" style="height:73%"></div>
+                                    <div class="bar pending" style="height:28%"></div>
+                                </div>
+
+                                <span class="bar-label">Dec</span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="d-flex gap-3 mt-3">
+
+                            <div class="legend-row mb-0">
+                                <span class="legend-dot dot-purple"></span>
+                                Approved
+                            </div>
+
+                            <div class="legend-row mb-0">
+                                <span class="legend-dot" style="background:#c7d2fe"></span>
+                                Pending
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LEAVE TYPE -->
+
+                <div class="col-lg-4">
+
+                    <div class="report-card">
+
+                        <div class="card-header-custom">
+
+                            <div>
+
+                                <h5>
+                                    Leave Distribution
+                                </h5>
+
+                                <p>
+                                    By leave category
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="donut-area">
+
+                            <div class="donut">
+
+                                <div class="donut-center">
+
+                                    <strong>
+                                        186
+                                    </strong>
+
+                                    <small>
+                                        Requests
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="legend-list">
+
+                                <div class="legend-row">
+
+                                    <span class="legend-dot dot-purple"></span>
+
+                                    Annual
+
+                                    <strong>50%</strong>
+
+                                </div>
+
+
+                                <div class="legend-row">
+
+                                    <span class="legend-dot dot-green"></span>
+
+                                    Sick
+
+                                    <strong>25%</strong>
+
+                                </div>
+
+
+                                <div class="legend-row">
+
+                                    <span class="legend-dot dot-yellow"></span>
+
+                                    Casual
+
+                                    <strong>15%</strong>
+
+                                </div>
+
+
+                                <div class="legend-row">
+
+                                    <span class="legend-dot dot-red"></span>
+
+                                    Emergency
+
+                                    <strong>10%</strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= BOTTOM ROW ================= -->
+
+            <div class="row g-4">
+
+
+                <!-- DEPARTMENT -->
+
+                <div class="col-lg-5">
+
+                    <div class="report-card">
+
+                        <div class="card-header-custom">
+
+                            <div>
+
+                                <h5>
+                                    Department Overview
+                                </h5>
+
+                                <p>
+                                    Leave utilization by department
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="department-row">
+
+                            <div class="department-top">
+                                <span>Computer Science</span>
+                                <strong>82%</strong>
+                            </div>
+
+                            <div class="department-progress">
+                                <span style="width:82%"></span>
+                            </div>
+
+                        </div>
+
+
+                        <div class="department-row">
+
+                            <div class="department-top">
+                                <span>Human Resources</span>
+                                <strong>64%</strong>
+                            </div>
+
+                            <div class="department-progress">
+                                <span style="width:64%"></span>
+                            </div>
+
+                        </div>
+
+
+                        <div class="department-row">
+
+                            <div class="department-top">
+                                <span>Finance</span>
+                                <strong>58%</strong>
+                            </div>
+
+                            <div class="department-progress">
+                                <span style="width:58%"></span>
+                            </div>
+
+                        </div>
+
+
+                        <div class="department-row">
+
+                            <div class="department-top">
+                                <span>Marketing</span>
+                                <strong>46%</strong>
+                            </div>
+
+                            <div class="department-progress">
+                                <span style="width:46%"></span>
+                            </div>
+
+                        </div>
+
+
+                        <div class="department-row mb-0">
+
+                            <div class="department-top">
+                                <span>Operations</span>
+                                <strong>39%</strong>
+                            </div>
+
+                            <div class="department-progress">
+                                <span style="width:39%"></span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- APPROVAL PERFORMANCE -->
+
+                <div class="col-lg-3">
+
+                    <div class="report-card">
+
+                        <div class="card-header-custom">
+
+                            <div>
+
+                                <h5>
+                                    Approval Rate
+                                </h5>
+
+                                <p>
+                                    Overall performance
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="performance-box">
+
+                            <div class="performance-score">
+
+                                <span class="score-number">
+                                    88%
+                                </span>
+
+                            </div>
+
+                            <h6>
+                                Excellent
+                            </h6>
+
+                            <p>
+                                142 of 159 eligible requests approved
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTIVITY -->
+
+                <div class="col-lg-4">
+
+                    <div class="report-card">
+
+                        <div class="card-header-custom">
+
+                            <div>
+
+                                <h5>
+                                    Recent Activity
+                                </h5>
+
+                                <p>
+                                    Latest leave actions
+                                </p>
+
+                            </div>
+
+                            <i class="bi bi-three-dots text-muted"></i>
+
+                        </div>
+
+
+                        <div class="activity">
+
+                            <div class="activity-icon">
+                                <i class="bi bi-check-lg"></i>
+                            </div>
+
+                            <div class="activity-content">
+
+                                <p>
+                                    <strong>Priya Sharma</strong>
+                                    approved Sadhana's leave request.
+                                </p>
+
+                                <small>
+                                    15 minutes ago
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="activity">
+
+                            <div class="activity-icon">
+                                <i class="bi bi-send"></i>
+                            </div>
+
+                            <div class="activity-content">
+
+                                <p>
+                                    <strong>Arun Kumar</strong>
+                                    submitted a sick leave request.
+                                </p>
+
+                                <small>
+                                    1 hour ago
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="activity">
+
+                            <div class="activity-icon">
+                                <i class="bi bi-x-lg"></i>
+                            </div>
+
+                            <div class="activity-content">
+
+                                <p>
+                                    <strong>Riya Menon</strong>
+                                    leave request was rejected.
+                                </p>
+
+                                <small>
+                                    3 hours ago
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="activity">
+
+                            <div class="activity-icon">
+                                <i class="bi bi-file-earmark-plus"></i>
+                            </div>
+
+                            <div class="activity-content">
+
+                                <p>
+                                    <strong>Vikram Raj</strong>
+                                    submitted annual leave.
+                                </p>
+
+                                <small>
+                                    Yesterday
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        function toggleSidebar() {
+
+            document
+                .getElementById("sidebar")
+                .classList.toggle("show");
+
+        }
+
+
+        function changePeriod(value) {
+
+            if (value === "2025") {
+
+                alert(
+                    "2025 report data loaded successfully."
+                );
+
+            } else {
+
+                alert(
+                    "2026 report data loaded successfully."
+                );
+
+            }
+
+        }
+
+
+        function exportReport() {
+
+            const reportData = `
+WorkEase - Leave Analytics Report
+
+Year: 2026
+
+Total Requests: 186
+Approved Requests: 142
+Pending Requests: 27
+Rejected Requests: 17
+
+Approval Rate: 88%
+
+Department Overview:
+Computer Science - 82%
+Human Resources - 64%
+Finance - 58%
+Marketing - 46%
+Operations - 39%
+            `;
+
+            const blob =
+                new Blob(
+                    [reportData],
+                    {type: "text/plain"}
+                );
+
+            const url =
+                URL.createObjectURL(blob);
+
+            const link =
+                document.createElement("a");
+
+            link.href = url;
+
+            link.download =
+                "WorkEase-Leave-Report-2026.txt";
+
+            link.click();
+
+            URL.revokeObjectURL(url);
+
+        }
+
+    </script>
+
+</body>
+
+</html>Next

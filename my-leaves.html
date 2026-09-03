@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Leaves | LeaveFlow</title>
+
+    <!-- Login Protection -->
+    <script>
+        if (localStorage.getItem("leaveFlowLoggedIn") !== "true") {
+            window.location.href = "login.html";
+        }
+    </script>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Inter", sans-serif;
+            background: #f6f8fc;
+            color: #172033;
+        }
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: #ffffff;
+            border-right: 1px solid #e9edf5;
+            padding: 25px 16px;
+            z-index: 1000;
+            transition: 0.3s;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 0 12px;
+            margin-bottom: 32px;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, #635bff, #8b7cff);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .brand-text h4 {
+            margin: 0;
+            font-size: 19px;
+            font-weight: 800;
+            color: #1d2440;
+        }
+
+        .brand-text span {
+            font-size: 10px;
+            color: #8c94a7;
+            letter-spacing: 1.2px;
+            font-weight: 600;
+        }
+
+        .menu-title {
+            font-size: 10px;
+            font-weight: 700;
+            color: #a0a7b7;
+            letter-spacing: 1.2px;
+            margin: 20px 12px 9px;
+        }
+
+        .nav-item-custom {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 11px 13px;
+            margin-bottom: 4px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #687086;
+            font-size: 13px;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .nav-item-custom i {
+            font-size: 17px;
+            width: 20px;
+        }
+
+        .nav-item-custom:hover {
+            background: #f3f2ff;
+            color: #635bff;
+        }
+
+        .nav-item-custom.active {
+            background: #eeeefe;
+            color: #635bff;
+        }
+
+        .help-box {
+            position: absolute;
+            left: 16px;
+            right: 16px;
+            bottom: 20px;
+            background: #f7f7ff;
+            border-radius: 14px;
+            padding: 16px;
+        }
+
+        .help-box .help-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            background: #e8e7ff;
+            color: #635bff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .help-box strong {
+            display: block;
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+
+        .help-box span {
+            font-size: 10px;
+            color: #8d95a7;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .help-box a {
+            font-size: 11px;
+            color: #635bff;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        /* ================= MAIN ================= */
+
+        .main {
+            margin-left: 250px;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            height: 74px;
+            background: white;
+            border-bottom: 1px solid #e9edf5;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+        }
+
+        .breadcrumb-area {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .breadcrumb {
+            margin: 0;
+            font-size: 11px;
+            color: #969daf;
+        }
+
+        .breadcrumb .active {
+            color: #424b60;
+            font-weight: 600;
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 21px;
+        }
+
+        .top-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #697287;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .top-icon:hover {
+            background: #f4f5fa;
+            color: #635bff;
+        }
+
+        .notification-dot {
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            background: #ff5c70;
+            border: 2px solid white;
+            border-radius: 50%;
+            top: 6px;
+            right: 5px;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .avatar {
+            width: 39px;
+            height: 39px;
+            border-radius: 50%;
+            background: #e7e6ff;
+            color: #635bff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .profile-info strong {
+            display: block;
+            font-size: 12px;
+            color: #283044;
+        }
+
+        .profile-info span {
+            font-size: 10px;
+            color: #969daf;
+        }
+
+        .profile-menu {
+            position: absolute;
+            top: 52px;
+            right: 0;
+            width: 175px;
+            background: white;
+            border: 1px solid #e8ebf2;
+            border-radius: 12px;
+            padding: 7px;
+            box-shadow: 0 15px 35px rgba(25, 30, 50, 0.12);
+            display: none;
+            z-index: 2000;
+        }
+
+        .profile-menu.show {
+            display: block;
+        }
+
+        .profile-menu a,
+        .profile-menu button {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            border: none;
+            background: transparent;
+            padding: 9px 10px;
+            border-radius: 8px;
+            color: #5d6679;
+            text-decoration: none;
+            font-size: 12px;
+            text-align: left;
+        }
+
+        .profile-menu a:hover,
+        .profile-menu button:hover {
+            background: #f5f5ff;
+            color: #635bff;
+        }
+
+        .profile-menu .logout {
+            color: #ef5c6a;
+        }
+
+        /* ================= PAGE ================= */
+
+        .page-content {
+            padding: 32px;
+        }
+
+        .page-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+        }
+
+        .eyebrow {
+            font-size: 10px;
+            letter-spacing: 1.4px;
+            color: #635bff;
+            font-weight: 800;
+            margin-bottom: 7px;
+        }
+
+        .page-heading h1 {
+            font-size: 27px;
+            font-weight: 800;
+            margin: 0 0 6px;
+            color: #20283b;
+        }
+
+        .page-heading p {
+            margin: 0;
+            color: #8c94a7;
+            font-size: 12px;
+        }
+
+        .apply-btn {
+            border: none;
+            background: #635bff;
+            color: white;
+            padding: 11px 17px;
+            border-radius: 9px;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 7px 18px rgba(99, 91, 255, 0.18);
+        }
+
+        .apply-btn:hover {
+            background: #5149e9;
+            color: white;
+        }
+
+        /* ================= STATS ================= */
+
+        .stat-card {
+            background: white;
+            border: 1px solid #e9edf5;
+            border-radius: 14px;
+            padding: 19px;
+            height: 100%;
+        }
+
+        .stat-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 17px;
+        }
+
+        .stat-icon {
+            width: 37px;
+            height: 37px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+        }
+
+        .icon-purple {
+            background: #eeeefe;
+            color: #635bff;
+        }
+
+        .icon-orange {
+            background: #fff1e6;
+            color: #f2934b;
+        }
+
+        .icon-green {
+            background: #e8f8ef;
+            color: #32a66a;
+        }
+
+        .icon-blue {
+            background: #e8f2ff;
+            color: #4389dc;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #8d95a7;
+            font-weight: 600;
+        }
+
+        .stat-number {
+            font-size: 23px;
+            font-weight: 800;
+            color: #20283b;
+            margin-bottom: 4px;
+        }
+
+        .stat-sub {
+            font-size: 10px;
+            color: #a0a7b7;
+        }
+
+        /* ================= FILTER ================= */
+
+        .content-card {
+            background: white;
+            border: 1px solid #e9edf5;
+            border-radius: 15px;
+            margin-top: 25px;
+            overflow: hidden;
+        }
+
+        .filter-area {
+            padding: 18px 20px;
+            border-bottom: 1px solid #edf0f5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .search-box {
+            width: 280px;
+            height: 38px;
+            border: 1px solid #e3e7ef;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            background: #fafbfc;
+        }
+
+        .search-box i {
+            color: #9ca4b4;
+            font-size: 14px;
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            background: transparent;
+            width: 100%;
+            font-size: 11px;
+            padding-left: 8px;
+            color: #3d4659;
+        }
+
+        .filter-right {
+            display: flex;
+            gap: 9px;
+        }
+
+        .filter-select {
+            height: 38px;
+            border: 1px solid #e3e7ef;
+            border-radius: 9px;
+            padding: 0 12px;
+            font-size: 11px;
+            color: #5f687b;
+            outline: none;
+            background: #fafbfc;
+        }
+
+        /* ================= TABLE ================= */
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        .leave-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 760px;
+        }
+
+        .leave-table th {
+            background: #fafbfc;
+            padding: 13px 20px;
+            text-align: left;
+            font-size: 10px;
+            color: #929aab;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            border-bottom: 1px solid #edf0f5;
+        }
+
+        .leave-table td {
+            padding: 17px 20px;
+            border-bottom: 1px solid #f0f2f6;
+            font-size: 11px;
+            color: #4d5669;
+            vertical-align: middle;
+        }
+
+        .leave-table tbody tr:hover {
+            background: #fafaff;
+        }
+
+        .leave-type {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .leave-type-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+        }
+
+        .leave-type strong {
+            display: block;
+            color: #30394c;
+            font-size: 11px;
+            margin-bottom: 3px;
+        }
+
+        .leave-type span {
+            font-size: 9px;
+            color: #a0a7b7;
+        }
+
+        .date-text {
+            font-weight: 600;
+            color: #4d5669;
+        }
+
+        .days {
+            font-weight: 700;
+            color: #30394c;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+        .status-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+        }
+
+        .approved {
+            background: #eaf8f0;
+            color: #2d9b63;
+        }
+
+        .approved .status-dot {
+            background: #35aa6d;
+        }
+
+        .pending {
+            background: #fff5e8;
+            color: #d88a2c;
+        }
+
+        .pending .status-dot {
+            background: #e99b3c;
+        }
+
+        .rejected {
+            background: #fff0f2;
+            color: #e15d6d;
+        }
+
+        .rejected .status-dot {
+            background: #e15d6d;
+        }
+
+        .action-btn {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #e5e8ef;
+            background: white;
+            border-radius: 8px;
+            color: #7a8293;
+            cursor: pointer;
+        }
+
+        .action-btn:hover {
+            background: #f2f1ff;
+            color: #635bff;
+            border-color: #dcd9ff;
+        }
+
+        /* ================= EMPTY ================= */
+
+        .empty-state {
+            text-align: center;
+            padding: 55px 20px;
+            display: none;
+        }
+
+        .empty-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 15px;
+            border-radius: 17px;
+            background: #f0efff;
+            color: #635bff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+        }
+
+        .empty-state h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .empty-state p {
+            font-size: 11px;
+            color: #929aab;
+            margin-bottom: 17px;
+        }
+
+        /* ================= MOBILE ================= */
+
+        .mobile-menu {
+            display: none;
+            border: none;
+            background: transparent;
+            font-size: 22px;
+            color: #4e5668;
+            margin-right: 12px;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(20, 24, 40, 0.35);
+            z-index: 999;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .overlay.show {
+                display: block;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .mobile-menu {
+                display: inline-block;
+            }
+
+            .topbar {
+                padding: 0 18px;
+            }
+
+            .profile-info {
+                display: none;
+            }
+
+            .page-content {
+                padding: 22px 18px;
+            }
+
+            .page-heading {
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .page-heading h1 {
+                font-size: 23px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .top-actions {
+                gap: 8px;
+            }
+
+            .search-top {
+                display: none;
+            }
+
+            .page-heading {
+                flex-direction: column;
+            }
+
+            .filter-area {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .filter-right {
+                width: 100%;
+            }
+
+            .filter-select {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Mobile Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">
+                <i class="bi bi-calendar2-check"></i>
+            </div>
+
+            <div class="brand-text">
+                <h4>LeaveFlow</h4>
+                <span>HR MANAGEMENT</span>
+            </div>
+        </div>
+
+        <div class="menu-title">MAIN MENU</div>
+
+        <a href="index.html" class="nav-item-custom">
+            <i class="bi bi-grid-1x2"></i>
+            Dashboard
+        </a>
+
+        <a href="apply-leave.html" class="nav-item-custom">
+            <i class="bi bi-plus-circle"></i>
+            Apply Leave
+        </a>
+
+        <a href="my-leaves.html" class="nav-item-custom active">
+            <i class="bi bi-file-earmark-text"></i>
+            My Leaves
+        </a>
+
+        <a href="calendar.html" class="nav-item-custom">
+            <i class="bi bi-calendar3"></i>
+            Leave Calendar
+        </a>
+
+        <div class="menu-title">MANAGEMENT</div>
+
+        <a href="employees.html" class="nav-item-custom">
+            <i class="bi bi-people"></i>
+            Employees
+        </a>
+
+        <a href="reports.html" class="nav-item-custom">
+            <i class="bi bi-bar-chart"></i>
+            Reports
+        </a>
+
+        <a href="settings.html" class="nav-item-custom">
+            <i class="bi bi-gear"></i>
+            Settings
+        </a>
+
+        <div class="help-box">
+            <div class="help-icon">
+                <i class="bi bi-headset"></i>
+            </div>
+
+            <strong>Need Help?</strong>
+            <span>Contact HR Support</span>
+
+            <a href="#" onclick="contactHR(event)">
+                Get Support <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+
+    </aside>
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="d-flex align-items-center">
+
+                <button class="mobile-menu" id="mobileMenu">
+                    <i class="bi bi-list"></i>
+                </button>
+
+                <div class="breadcrumb-area">
+                    <div class="breadcrumb">
+                        Workspace
+                        <span class="mx-1">/</span>
+                        <span class="active">My Leaves</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="top-actions">
+
+                <div class="top-icon search-top">
+                    <i class="bi bi-search"></i>
+                </div>
+
+                <div class="top-icon" onclick="showNotifications()">
+                    <i class="bi bi-bell"></i>
+                    <span class="notification-dot"></span>
+                </div>
+
+                <div class="profile" id="profileBtn">
+
+                    <div class="avatar">SA</div>
+
+                    <div class="profile-info">
+                        <strong>Sadhana</strong>
+                        <span>Employee</span>
+                    </div>
+
+                    <i class="bi bi-chevron-down" style="font-size:11px;color:#9aa1b0;"></i>
+
+                    <div class="profile-menu" id="profileMenu">
+
+                        <a href="profile.html">
+                            <i class="bi bi-person"></i>
+                            My Profile
+                        </a>
+
+                        <a href="settings.html">
+                            <i class="bi bi-gear"></i>
+                            Settings
+                        </a>
+
+                        <button class="logout" onclick="logoutUser()">
+                            <i class="bi bi-box-arrow-right"></i>
+                            Logout
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+        <!-- PAGE CONTENT -->
+
+        <section class="page-content">
+
+            <!-- Heading -->
+
+            <div class="page-heading">
+
+                <div>
+                    <div class="eyebrow">LEAVE MANAGEMENT</div>
+
+                    <h1>My Leaves</h1>
+
+                    <p>
+                        View, track and manage all your leave requests.
+                    </p>
+                </div>
+
+                <a href="apply-leave.html" class="apply-btn">
+                    <i class="bi bi-plus-lg"></i>
+                    Apply New Leave
+                </a>
+
+            </div>
+
+            <!-- ================= STATS ================= -->
+
+            <div class="row g-3">
+
+                <div class="col-6 col-xl-3">
+
+                    <div class="stat-card">
+
+                        <div class="stat-top">
+                            <span class="stat-label">Total Requests</span>
+
+                            <div class="stat-icon icon-purple">
+                                <i class="bi bi-file-earmark-text"></i>
+                            </div>
+                        </div>
+
+                        <div class="stat-number" id="totalRequests">
+                            3
+                        </div>
+
+                        <div class="stat-sub">
+                            All time requests
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-6 col-xl-3">
+
+                    <div class="stat-card">
+
+                        <div class="stat-top">
+                            <span class="stat-label">Approved</span>
+
+                            <div class="stat-icon icon-green">
+                                <i class="bi bi-check2-circle"></i>
+                            </div>
+                        </div>
+
+                        <div class="stat-number" id="approvedRequests">
+                            2
+                        </div>
+
+                        <div class="stat-sub">
+                            Approved requests
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-6 col-xl-3">
+
+                    <div class="stat-card">
+
+                        <div class="stat-top">
+                            <span class="stat-label">Pending</span>
+
+                            <div class="stat-icon icon-orange">
+                                <i class="bi bi-hourglass-split"></i>
+                            </div>
+                        </div>
+
+                        <div class="stat-number" id="pendingRequests">
+                            1
+                        </div>
+
+                        <div class="stat-sub">
+                            Waiting for approval
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-6 col-xl-3">
+
+                    <div class="stat-card">
+
+                        <div class="stat-top">
+                            <span class="stat-label">Days Taken</span>
+
+                            <div class="stat-icon icon-blue">
+                                <i class="bi bi-calendar-check"></i>
+                            </div>
+                        </div>
+
+                        <div class="stat-number" id="daysTaken">
+                            7
+                        </div>
+
+                        <div class="stat-sub">
+                            Total approved days
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ================= TABLE CARD ================= -->
+
+            <div class="content-card">
+
+                <!-- Filter -->
+
+                <div class="filter-area">
+
+                    <div class="search-box">
+
+                        <i class="bi bi-search"></i>
+
+                        <input type="text" id="searchInput" placeholder="Search leave requests...">
+
+                    </div>
+
+                    <div class="filter-right">
+
+                        <select class="filter-select" id="typeFilter">
+
+                            <option value="all">All Leave Types</option>
+                            <option value="Annual Leave">Annual Leave</option>
+                            <option value="Sick Leave">Sick Leave</option>
+                            <option value="Casual Leave">Casual Leave</option>
+                            <option value="Emergency Leave">Emergency Leave</option>
+
+                        </select>
+
+                        <select class="filter-select" id="statusFilter">
+
+                            <option value="all">All Status</option>
+                            <option value="Approved">Approved</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Rejected">Rejected</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <!-- Table -->
+
+                <div class="table-wrap">
+
+                    <table class="leave-table">
+
+                        <thead>
+
+                            <tr>
+                                <th>Leave Type</th>
+                                <th>Period</th>
+                                <th>Days</th>
+                                <th>Reason</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="leaveTableBody">
+
+                            <!-- Dynamic rows -->
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <!-- Empty State -->
+
+                <div class="empty-state" id="emptyState">
+
+                    <div class="empty-icon">
+                        <i class="bi bi-calendar-x"></i>
+                    </div>
+
+                    <h4>No Leave Requests Found</h4>
+
+                    <p>
+                        You don't have any leave requests matching your search.
+                    </p>
+
+                    <a href="apply-leave.html" class="apply-btn">
+                        <i class="bi bi-plus-lg"></i>
+                        Apply New Leave
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= MODAL ================= -->
+
+    <div class="modal fade" id="leaveDetailsModal" tabindex="-1">
+
+        <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content" style="border:0;border-radius:16px;overflow:hidden;">
+
+                <div class="modal-header" style="border-bottom:1px solid #edf0f5;padding:20px;">
+
+                    <div>
+                        <small style="font-size:9px;color:#635bff;font-weight:800;letter-spacing:1px;">
+                            LEAVE REQUEST
+                        </small>
+
+                        <h5 class="modal-title" style="font-size:17px;font-weight:800;margin-top:4px;">
+                            Leave Details
+                        </h5>
+                    </div>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+
+                </div>
+
+                <div class="modal-body" id="modalContent" style="padding:22px;font-size:12px;">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Bootstrap JS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+
+    <script>
+
+        /* ================= DEFAULT LEAVES ================= */
+
+        const defaultLeaves = [
+            {
+                id: "LR-2026-021",
+                leaveType: "Annual Leave",
+                startDate: "2026-09-10",
+                endDate: "2026-09-12",
+                days: 3,
+                reason: "Personal vacation",
+                status: "Approved"
+            },
+            {
+                id: "LR-2026-019",
+                leaveType: "Sick Leave",
+                startDate: "2026-08-28",
+                endDate: "2026-08-29",
+                days: 2,
+                reason: "Not feeling well",
+                status: "Pending"
+            },
+            {
+                id: "LR-2026-015",
+                leaveType: "Casual Leave",
+                startDate: "2026-08-15",
+                endDate: "2026-08-15",
+                days: 1,
+                reason: "Personal work",
+                status: "Approved"
+            }
+        ];
+
+
+        /* ================= GET LEAVES ================= */
+
+        function getLeaves() {
+
+            const savedLeaves =
+                JSON.parse(
+                    localStorage.getItem("leaveFlowRequests") || "[]"
+                );
+
+            return [...savedLeaves, ...defaultLeaves];
+
+        }
+
+
+        /* ================= ICON ================= */
+
+        function getLeaveIcon(type) {
+
+            if (type === "Annual Leave") {
+                return "bi-airplane";
+            }
+
+            if (type === "Sick Leave") {
+                return "bi-heart-pulse";
+            }
+
+            if (type === "Casual Leave") {
+                return "bi-cup-hot";
+            }
+
+            if (type === "Emergency Leave") {
+                return "bi-exclamation-triangle";
+            }
+
+            return "bi-calendar-event";
+
+        }
+
+
+        function getIconClass(type) {
+
+            if (type === "Annual Leave") {
+                return "icon-purple";
+            }
+
+            if (type === "Sick Leave") {
+                return "icon-orange";
+            }
+
+            if (type === "Casual Leave") {
+                return "icon-green";
+            }
+
+            return "icon-blue";
+
+        }
+
+
+        /* ================= FORMAT DATE ================= */
+
+        function formatDate(dateString) {
+
+            if (!dateString) return "-";
+
+            const date = new Date(dateString + "T00:00:00");
+
+            return date.toLocaleDateString("en-IN", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric"
+            });
+
+        }
+
+
+        /* ================= RENDER ================= */
+
+        function renderLeaves() {
+
+            const tbody =
+                document.getElementById("leaveTableBody");
+
+            const emptyState =
+                document.getElementById("emptyState");
+
+            const search =
+                document.getElementById("searchInput")
+                    .value
+                    .toLowerCase()
+                    .trim();
+
+            const type =
+                document.getElementById("typeFilter").value;
+
+            const status =
+                document.getElementById("statusFilter").value;
+
+
+            let leaves = getLeaves();
+
+
+            /* FILTER */
+
+            leaves = leaves.filter(leave => {
+
+                const matchesSearch =
+                    leave.leaveType.toLowerCase().includes(search) ||
+                    leave.reason.toLowerCase().includes(search) ||
+                    leave.id.toLowerCase().includes(search);
+
+                const matchesType =
+                    type === "all" ||
+                    leave.leaveType === type;
+
+                const matchesStatus =
+                    status === "all" ||
+                    leave.status === status;
+
+                return matchesSearch &&
+                    matchesType &&
+                    matchesStatus;
+
+            });
+
+
+            tbody.innerHTML = "";
+
+
+            if (leaves.length === 0) {
+
+                emptyState.style.display = "block";
+
+            } else {
+
+                emptyState.style.display = "none";
+
+
+                leaves.forEach((leave, index) => {
+
+                    const row =
+                        document.createElement("tr");
+
+
+                    const statusClass =
+                        leave.status.toLowerCase();
+
+
+                    row.innerHTML = `
+
+                        <td>
+
+                            <div class="leave-type">
+
+                                <div class="leave-type-icon ${getIconClass(leave.leaveType)}">
+
+                                    <i class="bi ${getLeaveIcon(leave.leaveType)}"></i>
+
+                                </div>
+
+                                <div>
+
+                                    <strong>${leave.leaveType}</strong>
+
+                                    <span>${leave.id}</span>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="date-text">
+
+                                ${formatDate(leave.startDate)}
+
+                                ${leave.startDate !== leave.endDate
+                            ? " - " + formatDate(leave.endDate)
+                            : ""}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="days">
+
+                                ${leave.days}
+
+                                ${leave.days == 1 ? "day" : "days"}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            ${leave.reason || "No reason provided"}
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="status ${statusClass}">
+
+                                <span class="status-dot"></span>
+
+                                ${leave.status}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <button
+                                class="action-btn"
+                                onclick="viewLeave(${index})"
+                                title="View Details">
+
+                                <i class="bi bi-eye"></i>
+
+                            </button>
+
+                        </td>
+
+                    `;
+
+
+                    tbody.appendChild(row);
+
+                });
+
+            }
+
+
+            updateStats();
+
+        }
+
+
+        /* ================= STATS ================= */
+
+        function updateStats() {
+
+            const leaves = getLeaves();
+
+            const approved =
+                leaves.filter(l => l.status === "Approved");
+
+            const pending =
+                leaves.filter(l => l.status === "Pending");
+
+
+            const totalDays =
+                approved.reduce(
+                    (sum, leave) =>
+                        sum + Number(leave.days || 0),
+                    0
+                );
+
+
+            document.getElementById("totalRequests")
+                .textContent = leaves.length;
+
+            document.getElementById("approvedRequests")
+                .textContent = approved.length;
+
+            document.getElementById("pendingRequests")
+                .textContent = pending.length;
+
+            document.getElementById("daysTaken")
+                .textContent = totalDays;
+
+        }
+
+
+        /* ================= VIEW LEAVE ================= */
+
+        function viewLeave(index) {
+
+            const leaves = getLeaves();
+
+            const leave = leaves[index];
+
+            if (!leave) return;
+
+
+            document.getElementById("modalContent").innerHTML = `
+
+                <div style="display:grid;gap:15px;">
+
+                    <div>
+                        <small style="color:#969daf;">
+                            Request ID
+                        </small>
+
+                        <div style="font-weight:700;margin-top:4px;">
+                            ${leave.id}
+                        </div>
+                    </div>
+
+
+                    <div>
+                        <small style="color:#969daf;">
+                            Leave Type
+                        </small>
+
+                        <div style="font-weight:700;margin-top:4px;">
+                            ${leave.leaveType}
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+
+                        <div class="col-6">
+
+                            <small style="color:#969daf;">
+                                Start Date
+                            </small>
+
+                            <div style="font-weight:700;margin-top:4px;">
+                                ${formatDate(leave.startDate)}
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-6">
+
+                            <small style="color:#969daf;">
+                                End Date
+                            </small>
+
+                            <div style="font-weight:700;margin-top:4px;">
+                                ${formatDate(leave.endDate)}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div>
+
+                        <small style="color:#969daf;">
+                            Duration
+                        </small>
+
+                        <div style="font-weight:700;margin-top:4px;">
+                            ${leave.days}
+                            ${leave.days == 1 ? "day" : "days"}
+                        </div>
+
+                    </div>
+
+
+                    <div>
+
+                        <small style="color:#969daf;">
+                            Reason
+                        </small>
+
+                        <div style="font-weight:600;margin-top:4px;">
+                            ${leave.reason || "No reason provided"}
+                        </div>
+
+                    </div>
+
+
+                    <div>
+
+                        <small style="color:#969daf;">
+                            Status
+                        </small>
+
+                        <div style="margin-top:6px;">
+
+                            <span class="status ${leave.status.toLowerCase()}">
+
+                                <span class="status-dot"></span>
+
+                                ${leave.status}
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            const modal =
+                new bootstrap.Modal(
+                    document.getElementById("leaveDetailsModal")
+                );
+
+            modal.show();
+
+        }
+
+
+        /* ================= SEARCH ================= */
+
+        document
+            .getElementById("searchInput")
+            .addEventListener("input", renderLeaves);
+
+
+        document
+            .getElementById("typeFilter")
+            .addEventListener("change", renderLeaves);
+
+
+        document
+            .getElementById("statusFilter")
+            .addEventListener("change", renderLeaves);
+
+
+        /* ================= MOBILE MENU ================= */
+
+        const mobileMenu =
+            document.getElementById("mobileMenu");
+
+        const sidebar =
+            document.getElementById("sidebar");
+
+        const overlay =
+            document.getElementById("overlay");
+
+
+        mobileMenu.addEventListener("click", function () {
+
+            sidebar.classList.toggle("open");
+            overlay.classList.toggle("show");
+
+        });
+
+
+        overlay.addEventListener("click", function () {
+
+            sidebar.classList.remove("open");
+            overlay.classList.remove("show");
+
+        });
+
+
+        /* ================= PROFILE ================= */
+
+        document
+            .getElementById("profileBtn")
+            .addEventListener("click", function (event) {
+
+                event.stopPropagation();
+
+                document
+                    .getElementById("profileMenu")
+                    .classList.toggle("show");
+
+            });
+
+
+        document.addEventListener("click", function () {
+
+            document
+                .getElementById("profileMenu")
+                .classList.remove("show");
+
+        });
+
+
+        /* ================= LOGOUT ================= */
+
+        function logoutUser() {
+
+            const confirmLogout =
+                confirm("Are you sure you want to logout?");
+
+            if (confirmLogout) {
+
+                localStorage.removeItem("leaveFlowLoggedIn");
+
+                window.location.href = "login.html";
+
+            }
+
+        }
+
+
+        /* ================= NOTIFICATION ================= */
+
+        function showNotifications() {
+
+            alert(
+                "You have 2 leave notifications.\n\n" +
+                "• Sick Leave request is pending.\n" +
+                "• Annual Leave has been approved."
+            );
+
+        }
+
+
+        /* ================= HR SUPPORT ================= */
+
+        function contactHR(event) {
+
+            event.preventDefault();
+
+            alert(
+                "HR Support\n\n" +
+                "Please contact your HR team for assistance."
+            );
+
+        }
+
+
+        /* ================= INITIAL LOAD ================= */
+
+        renderLeaves();
+
+    </script>
+
+</body>
+
+</html>

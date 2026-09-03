@@ -1,0 +1,1709 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Employees - WorkEase</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: #f5f7fb;
+            color: #172033;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: #111827;
+            color: white;
+            z-index: 1000;
+            padding: 24px 16px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 10px 28px;
+        }
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .brand h4 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .brand small {
+            color: #9ca3af;
+            font-size: 10px;
+            letter-spacing: 1.5px;
+        }
+
+        .menu-title {
+            color: #6b7280;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 12px;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+        }
+
+        .nav-menu li {
+            margin-bottom: 5px;
+        }
+
+        .nav-menu a {
+            color: #9ca3af;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 12px 13px;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: .25s;
+        }
+
+        .nav-menu a:hover {
+            background: #1f2937;
+            color: white;
+        }
+
+        .nav-menu a.active {
+            background: linear-gradient(90deg, #4f46e5, #6366f1);
+            color: white;
+            box-shadow: 0 8px 20px rgba(79, 70, 229, .25);
+        }
+
+        .sidebar-bottom {
+            position: absolute;
+            bottom: 20px;
+            left: 16px;
+            right: 16px;
+        }
+
+        .help-card {
+            background: #1b2433;
+            border: 1px solid #273244;
+            padding: 14px;
+            border-radius: 12px;
+        }
+
+        .help-card i {
+            color: #818cf8;
+        }
+
+        .help-card p {
+            margin: 7px 0 0;
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        /* MAIN */
+
+        .main-content {
+            margin-left: 250px;
+            min-height: 100vh;
+        }
+
+        /* TOPBAR */
+
+        .topbar {
+            height: 72px;
+            background: white;
+            border-bottom: 1px solid #e8ebf0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            position: sticky;
+            top: 0;
+            z-index: 900;
+        }
+
+        .breadcrumb-area small {
+            color: #9ca3af;
+            font-size: 12px;
+        }
+
+        .breadcrumb-area h6 {
+            margin: 3px 0 0;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search-mini {
+            width: 220px;
+            position: relative;
+        }
+
+        .search-mini i {
+            position: absolute;
+            left: 12px;
+            top: 10px;
+            color: #9ca3af;
+        }
+
+        .search-mini input {
+            width: 100%;
+            height: 38px;
+            border: 1px solid #e5e7eb;
+            border-radius: 9px;
+            padding-left: 37px;
+            outline: none;
+            font-size: 13px;
+        }
+
+        .search-mini input:focus {
+            border-color: #6366f1;
+        }
+
+        .notification {
+            width: 38px;
+            height: 38px;
+            border: 1px solid #e5e7eb;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .notification span {
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            background: #ef4444;
+            border-radius: 50%;
+            top: 7px;
+            right: 7px;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .profile-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .profile-info strong {
+            display: block;
+            font-size: 13px;
+        }
+
+        .profile-info small {
+            color: #9ca3af;
+            font-size: 11px;
+        }
+
+        /* PAGE */
+
+        .page {
+            padding: 30px;
+        }
+
+        .page-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+
+        .page-heading h2 {
+            font-size: 25px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .page-heading p {
+            color: #8a94a6;
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .btn-primary-custom {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 10px 17px;
+            border-radius: 9px;
+            font-size: 13px;
+        }
+
+        .btn-primary-custom:hover {
+            background: #4338ca;
+            color: white;
+        }
+
+        /* STATS */
+
+        .stat-card {
+            background: white;
+            border: 1px solid #e9ecf2;
+            border-radius: 14px;
+            padding: 19px;
+            height: 100%;
+            transition: .25s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(15, 23, 42, .06);
+        }
+
+        .stat-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .icon-purple {
+            background: #eef2ff;
+            color: #4f46e5;
+        }
+
+        .icon-green {
+            background: #ecfdf5;
+            color: #059669;
+        }
+
+        .icon-orange {
+            background: #fff7ed;
+            color: #ea580c;
+        }
+
+        .icon-blue {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .stat-card h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .stat-card p {
+            margin: 0;
+            color: #8a94a6;
+            font-size: 12px;
+        }
+
+        /* TOOLBAR */
+
+        .directory-card {
+            margin-top: 25px;
+            background: white;
+            border: 1px solid #e9ecf2;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 22px;
+        }
+
+        .directory-title h5 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .directory-title small {
+            color: #9ca3af;
+            font-size: 11px;
+        }
+
+        .filters {
+            display: flex;
+            gap: 9px;
+        }
+
+        .filter-search {
+            position: relative;
+            width: 220px;
+        }
+
+        .filter-search i {
+            position: absolute;
+            left: 11px;
+            top: 10px;
+            color: #9ca3af;
+        }
+
+        .filter-search input {
+            width: 100%;
+            height: 38px;
+            border: 1px solid #e2e6ec;
+            border-radius: 8px;
+            padding-left: 35px;
+            font-size: 12px;
+            outline: none;
+        }
+
+        .filter-select {
+            height: 38px;
+            border: 1px solid #e2e6ec;
+            border-radius: 8px;
+            padding: 0 12px;
+            font-size: 12px;
+            color: #667085;
+            outline: none;
+        }
+
+        /* EMPLOYEE GRID */
+
+        .employee-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .employee-card {
+            border: 1px solid #edf0f4;
+            border-radius: 13px;
+            padding: 17px;
+            transition: .25s;
+            position: relative;
+            background: #fff;
+        }
+
+        .employee-card:hover {
+            transform: translateY(-4px);
+            border-color: #d9dcff;
+            box-shadow: 0 12px 28px rgba(15, 23, 42, .07);
+        }
+
+        .employee-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .employee-avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .avatar-1 {
+            background: linear-gradient(135deg, #6366f1, #818cf8);
+        }
+
+        .avatar-2 {
+            background: linear-gradient(135deg, #0f766e, #14b8a6);
+        }
+
+        .avatar-3 {
+            background: linear-gradient(135deg, #db2777, #f472b6);
+        }
+
+        .avatar-4 {
+            background: linear-gradient(135deg, #ea580c, #fb923c);
+        }
+
+        .avatar-5 {
+            background: linear-gradient(135deg, #2563eb, #60a5fa);
+        }
+
+        .avatar-6 {
+            background: linear-gradient(135deg, #7c3aed, #a78bfa);
+        }
+
+        .status-dot {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: #ecfdf5;
+            color: #059669;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 9px;
+            font-weight: 600;
+        }
+
+        .status-dot::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            background: #10b981;
+            border-radius: 50%;
+        }
+
+        .employee-info {
+            margin-top: 14px;
+        }
+
+        .employee-info h6 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .employee-info .role {
+            color: #6366f1;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .employee-details {
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid #f0f1f4;
+        }
+
+        .detail-line {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 7px;
+            color: #7d8797;
+            font-size: 10px;
+        }
+
+        .detail-line i {
+            color: #9ca3af;
+            width: 14px;
+        }
+
+        .employee-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 14px;
+        }
+
+        .department {
+            background: #f5f6f8;
+            color: #697386;
+            padding: 5px 8px;
+            border-radius: 6px;
+            font-size: 9px;
+        }
+
+        .view-btn {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #e5e7eb;
+            background: white;
+            color: #6366f1;
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .view-btn:hover {
+            background: #eef2ff;
+        }
+
+        .no-result {
+            display: none;
+            text-align: center;
+            padding: 50px 20px;
+            color: #9ca3af;
+        }
+
+        .no-result i {
+            font-size: 35px;
+            margin-bottom: 10px;
+        }
+
+        /* MODAL */
+
+        .modal-content {
+            border: none;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            background: #111827;
+            color: white;
+            border: none;
+        }
+
+        .modal-title {
+            font-size: 16px;
+        }
+
+        .modal-profile {
+            text-align: center;
+            padding: 8px 0 20px;
+        }
+
+        .modal-avatar {
+            width: 75px;
+            height: 75px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .modal-profile h5 {
+            margin-top: 12px;
+            margin-bottom: 3px;
+            font-weight: 700;
+        }
+
+        .modal-profile p {
+            color: #6366f1;
+            font-size: 12px;
+            margin: 0;
+        }
+
+        .modal-detail {
+            display: flex;
+            justify-content: space-between;
+            padding: 11px 0;
+            border-bottom: 1px solid #eef0f3;
+            font-size: 12px;
+        }
+
+        .modal-detail span {
+            color: #8a94a6;
+        }
+
+        .modal-detail strong {
+            color: #273244;
+        }
+
+        /* MOBILE */
+
+        .mobile-menu {
+            display: none;
+            width: 36px;
+            height: 36px;
+            border: 1px solid #e5e7eb;
+            background: white;
+            border-radius: 8px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media(max-width:1100px) {
+
+            .sidebar {
+                width: 220px;
+            }
+
+            .main-content {
+                margin-left: 220px;
+            }
+
+            .search-mini {
+                display: none;
+            }
+
+            .employee-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media(max-width:900px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+                transition: .3s;
+            }
+
+            .sidebar.show {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .mobile-menu {
+                display: flex;
+                margin-right: 10px;
+            }
+
+            .topbar {
+                padding: 0 18px;
+            }
+
+            .page {
+                padding: 20px 15px;
+            }
+
+            .toolbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .filters {
+                width: 100%;
+            }
+
+            .filter-search {
+                flex: 1;
+            }
+
+        }
+
+        @media(max-width:600px) {
+
+            .employee-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .top-actions {
+                gap: 8px;
+            }
+
+            .profile-info {
+                display: none;
+            }
+
+            .page-heading {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .page-heading h2 {
+                font-size: 21px;
+            }
+
+            .btn-primary-custom {
+                width: 100%;
+            }
+
+            .filters {
+                flex-direction: column;
+            }
+
+            .filter-search,
+            .filter-select {
+                width: 100%;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                <i class="bi bi-calendar2-check"></i>
+            </div>
+
+            <div>
+                <h4>WorkEase</h4>
+                <small>EMPLOYEE PORTAL</small>
+            </div>
+
+        </div>
+
+
+        <div class="menu-title">Main Menu</div>
+
+        <ul class="nav-menu">
+
+            <li>
+                <a href="index.html">
+                    <i class="bi bi-grid-1x2-fill"></i>
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="apply-leave.html">
+                    <i class="bi bi-plus-circle"></i>
+                    Apply Leave
+                </a>
+            </li>
+
+            <li>
+                <a href="my-leaves.html">
+                    <i class="bi bi-file-earmark-text"></i>
+                    My Requests
+                </a>
+            </li>
+
+            <li>
+                <a href="calendar.html">
+                    <i class="bi bi-calendar3"></i>
+                    Team Calendar
+                </a>
+            </li>
+
+        </ul>
+
+
+        <div class="menu-title mt-3">Workspace</div>
+
+        <ul class="nav-menu">
+
+            <li>
+                <a href="employees.html" class="active">
+                    <i class="bi bi-people"></i>
+                    Employees
+                </a>
+            </li>
+
+            <li>
+                <a href="reports.html">
+                    <i class="bi bi-bar-chart"></i>
+                    Reports
+                </a>
+            </li>
+
+            <li>
+                <a href="settings.html">
+                    <i class="bi bi-gear"></i>
+                    Settings
+                </a>
+            </li>
+
+        </ul>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="help-card">
+                <i class="bi bi-headset"></i>
+                <p>Need help? Contact HR support for assistance.</p>
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="d-flex align-items-center">
+
+                <button class="mobile-menu" onclick="toggleSidebar()">
+                    <i class="bi bi-list"></i>
+                </button>
+
+                <div class="breadcrumb-area">
+                    <small>Workspace / Employees</small>
+                    <h6>Employee Directory</h6>
+                </div>
+
+            </div>
+
+
+            <div class="top-actions">
+
+                <div class="search-mini">
+                    <i class="bi bi-search"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+
+                <div class="notification">
+                    <i class="bi bi-bell"></i>
+                    <span></span>
+                </div>
+
+                <div class="profile">
+
+                    <div class="profile-avatar">
+                        SA
+                    </div>
+
+                    <div class="profile-info">
+                        <strong>Sadhana</strong>
+                        <small>Employee</small>
+                    </div>
+
+                    <i class="bi bi-chevron-down small text-muted"></i>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- PAGE -->
+
+        <section class="page">
+
+            <!-- HEADING -->
+
+            <div class="page-heading">
+
+                <div>
+                    <h2>Employee Directory</h2>
+                    <p>View and manage employees across your organization.</p>
+                </div>
+
+                <button class="btn-primary-custom">
+                    <i class="bi bi-person-plus me-1"></i>
+                    Add Employee
+                </button>
+
+            </div>
+
+
+            <!-- STATS -->
+
+            <div class="row g-3">
+
+                <div class="col-xl-3 col-md-6">
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon icon-purple">
+                            <i class="bi bi-people"></i>
+                        </div>
+
+                        <h3>48</h3>
+                        <p>Total Employees</p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-xl-3 col-md-6">
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon icon-green">
+                            <i class="bi bi-person-check"></i>
+                        </div>
+
+                        <h3>42</h3>
+                        <p>Active Employees</p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-xl-3 col-md-6">
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon icon-orange">
+                            <i class="bi bi-person-dash"></i>
+                        </div>
+
+                        <h3>4</h3>
+                        <p>On Leave Today</p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-xl-3 col-md-6">
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon icon-blue">
+                            <i class="bi bi-building"></i>
+                        </div>
+
+                        <h3>8</h3>
+                        <p>Departments</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DIRECTORY -->
+
+            <div class="directory-card">
+
+                <div class="toolbar">
+
+                    <div class="directory-title">
+
+                        <h5>All Employees</h5>
+
+                        <small>
+                            48 employees found in your organization
+                        </small>
+
+                    </div>
+
+
+                    <div class="filters">
+
+                        <div class="filter-search">
+
+                            <i class="bi bi-search"></i>
+
+                            <input type="text" id="employeeSearch" placeholder="Search employee...">
+
+                        </div>
+
+
+                        <select class="filter-select" id="departmentFilter">
+
+                            <option value="all">
+                                All Departments
+                            </option>
+
+                            <option value="Computer Science">
+                                Computer Science
+                            </option>
+
+                            <option value="Human Resources">
+                                Human Resources
+                            </option>
+
+                            <option value="Finance">
+                                Finance
+                            </option>
+
+                            <option value="Marketing">
+                                Marketing
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EMPLOYEE GRID -->
+
+                <div class="employee-grid" id="employeeGrid">
+
+
+                    <!-- EMPLOYEE 1 -->
+
+                    <div class="employee-card" data-name="Sadhana" data-department="Computer Science">
+
+                        <div class="employee-top">
+
+                            <div class="employee-avatar avatar-1">
+                                SA
+                            </div>
+
+                            <div class="status-dot">
+                                Active
+                            </div>
+
+                        </div>
+
+
+                        <div class="employee-info">
+
+                            <h6>Sadhana</h6>
+
+                            <div class="role">
+                                Software Developer
+                            </div>
+
+                        </div>
+
+
+                        <div class="employee-details">
+
+                            <div class="detail-line">
+                                <i class="bi bi-envelope"></i>
+                                sadhana@workease.com
+                            </div>
+
+                            <div class="detail-line">
+                                <i class="bi bi-briefcase"></i>
+                                EMP024
+                            </div>
+
+                        </div>
+
+
+                        <div class="employee-footer">
+
+                            <span class="department">
+                                Computer Science
+                            </span>
+
+                            <button class="view-btn" onclick="showEmployee(
+                                    'Sadhana',
+                                    'Software Developer',
+                                    'EMP024',
+                                    'Computer Science',
+                                    'sadhana@workease.com',
+                                    'Priya Sharma',
+                                    'SA'
+                                )">
+                                <i class="bi bi-arrow-up-right"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- EMPLOYEE 2 -->
+
+                    <div class="employee-card" data-name="Priya Sharma" data-department="Human Resources">
+
+                        <div class="employee-top">
+
+                            <div class="employee-avatar avatar-2">
+                                PS
+                            </div>
+
+                            <div class="status-dot">
+                                Active
+                            </div>
+
+                        </div>
+
+                        <div class="employee-info">
+
+                            <h6>Priya Sharma</h6>
+
+                            <div class="role">
+                                HR Manager
+                            </div>
+
+                        </div>
+
+                        <div class="employee-details">
+
+                            <div class="detail-line">
+                                <i class="bi bi-envelope"></i>
+                                priya@workease.com
+                            </div>
+
+                            <div class="detail-line">
+                                <i class="bi bi-briefcase"></i>
+                                EMP011
+                            </div>
+
+                        </div>
+
+                        <div class="employee-footer">
+
+                            <span class="department">
+                                Human Resources
+                            </span>
+
+                            <button class="view-btn" onclick="showEmployee(
+                                    'Priya Sharma',
+                                    'HR Manager',
+                                    'EMP011',
+                                    'Human Resources',
+                                    'priya@workease.com',
+                                    'Rajesh Kumar',
+                                    'PS'
+                                )">
+                                <i class="bi bi-arrow-up-right"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- EMPLOYEE 3 -->
+
+                    <div class="employee-card" data-name="Arun Kumar" data-department="Computer Science">
+
+                        <div class="employee-top">
+
+                            <div class="employee-avatar avatar-3">
+                                AK
+                            </div>
+
+                            <div class="status-dot">
+                                Active
+                            </div>
+
+                        </div>
+
+                        <div class="employee-info">
+
+                            <h6>Arun Kumar</h6>
+
+                            <div class="role">
+                                Frontend Developer
+                            </div>
+
+                        </div>
+
+                        <div class="employee-details">
+
+                            <div class="detail-line">
+                                <i class="bi bi-envelope"></i>
+                                arun@workease.com
+                            </div>
+
+                            <div class="detail-line">
+                                <i class="bi bi-briefcase"></i>
+                                EMP018
+                            </div>
+
+                        </div>
+
+                        <div class="employee-footer">
+
+                            <span class="department">
+                                Computer Science
+                            </span>
+
+                            <button class="view-btn" onclick="showEmployee(
+                                    'Arun Kumar',
+                                    'Frontend Developer',
+                                    'EMP018',
+                                    'Computer Science',
+                                    'arun@workease.com',
+                                    'Priya Sharma',
+                                    'AK'
+                                )">
+                                <i class="bi bi-arrow-up-right"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- EMPLOYEE 4 -->
+
+                    <div class="employee-card" data-name="Riya Menon" data-department="Marketing">
+
+                        <div class="employee-top">
+
+                            <div class="employee-avatar avatar-4">
+                                RM
+                            </div>
+
+                            <div class="status-dot">
+                                Active
+                            </div>
+
+                        </div>
+
+                        <div class="employee-info">
+
+                            <h6>Riya Menon</h6>
+
+                            <div class="role">
+                                Marketing Executive
+                            </div>
+
+                        </div>
+
+                        <div class="employee-details">
+
+                            <div class="detail-line">
+                                <i class="bi bi-envelope"></i>
+                                riya@workease.com
+                            </div>
+
+                            <div class="detail-line">
+                                <i class="bi bi-briefcase"></i>
+                                EMP031
+                            </div>
+
+                        </div>
+
+                        <div class="employee-footer">
+
+                            <span class="department">
+                                Marketing
+                            </span>
+
+                            <button class="view-btn" onclick="showEmployee(
+                                    'Riya Menon',
+                                    'Marketing Executive',
+                                    'EMP031',
+                                    'Marketing',
+                                    'riya@workease.com',
+                                    'Meena Joseph',
+                                    'RM'
+                                )">
+                                <i class="bi bi-arrow-up-right"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- EMPLOYEE 5 -->
+
+                    <div class="employee-card" data-name="Vikram Raj" data-department="Finance">
+
+                        <div class="employee-top">
+
+                            <div class="employee-avatar avatar-5">
+                                VR
+                            </div>
+
+                            <div class="status-dot">
+                                Active
+                            </div>
+
+                        </div>
+
+                        <div class="employee-info">
+
+                            <h6>Vikram Raj</h6>
+
+                            <div class="role">
+                                Finance Analyst
+                            </div>
+
+                        </div>
+
+                        <div class="employee-details">
+
+                            <div class="detail-line">
+                                <i class="bi bi-envelope"></i>
+                                vikram@workease.com
+                            </div>
+
+                            <div class="detail-line">
+                                <i class="bi bi-briefcase"></i>
+                                EMP029
+                            </div>
+
+                        </div>
+
+                        <div class="employee-footer">
+
+                            <span class="department">
+                                Finance
+                            </span>
+
+                            <button class="view-btn" onclick="showEmployee(
+                                    'Vikram Raj',
+                                    'Finance Analyst',
+                                    'EMP029',
+                                    'Finance',
+                                    'vikram@workease.com',
+                                    'Arun Joseph',
+                                    'VR'
+                                )">
+                                <i class="bi bi-arrow-up-right"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- EMPLOYEE 6 -->
+
+                    <div class="employee-card" data-name="Anitha Kumar" data-department="Human Resources">
+
+                        <div class="employee-top">
+
+                            <div class="employee-avatar avatar-6">
+                                AK
+                            </div>
+
+                            <div class="status-dot">
+                                Active
+                            </div>
+
+                        </div>
+
+                        <div class="employee-info">
+
+                            <h6>Anitha Kumar</h6>
+
+                            <div class="role">
+                                HR Executive
+                            </div>
+
+                        </div>
+
+                        <div class="employee-details">
+
+                            <div class="detail-line">
+                                <i class="bi bi-envelope"></i>
+                                anitha@workease.com
+                            </div>
+
+                            <div class="detail-line">
+                                <i class="bi bi-briefcase"></i>
+                                EMP036
+                            </div>
+
+                        </div>
+
+                        <div class="employee-footer">
+
+                            <span class="department">
+                                Human Resources
+                            </span>
+
+                            <button class="view-btn" onclick="showEmployee(
+                                    'Anitha Kumar',
+                                    'HR Executive',
+                                    'EMP036',
+                                    'Human Resources',
+                                    'anitha@workease.com',
+                                    'Priya Sharma',
+                                    'AK'
+                                )">
+                                <i class="bi bi-arrow-up-right"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- NO RESULT -->
+
+                <div class="no-result" id="noResult">
+
+                    <i class="bi bi-person-x"></i>
+
+                    <h6>No employees found</h6>
+
+                    <p class="small">
+                        Try changing your search or department filter.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- EMPLOYEE MODAL -->
+
+    <div class="modal fade" id="employeeModal" tabindex="-1">
+
+        <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title">
+                        <i class="bi bi-person-vcard me-2"></i>
+                        Employee Profile
+                    </h5>
+
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+
+                <div class="modal-body">
+
+                    <div class="modal-profile">
+
+                        <div class="modal-avatar" id="modalAvatar">
+                            SA
+                        </div>
+
+                        <h5 id="modalName">
+                            Sadhana
+                        </h5>
+
+                        <p id="modalRole">
+                            Software Developer
+                        </p>
+
+                    </div>
+
+
+                    <div class="modal-detail">
+                        <span>Employee ID</span>
+                        <strong id="modalId">EMP024</strong>
+                    </div>
+
+                    <div class="modal-detail">
+                        <span>Department</span>
+                        <strong id="modalDepartment">
+                            Computer Science
+                        </strong>
+                    </div>
+
+                    <div class="modal-detail">
+                        <span>Email</span>
+                        <strong id="modalEmail">
+                            sadhana@workease.com
+                        </strong>
+                    </div>
+
+                    <div class="modal-detail">
+                        <span>Reporting Manager</span>
+                        <strong id="modalManager">
+                            Priya Sharma
+                        </strong>
+                    </div>
+
+                    <div class="modal-detail">
+                        <span>Status</span>
+                        <strong class="text-success">
+                            Active
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="modal-footer">
+
+                    <button class="btn btn-light btn-sm" data-bs-dismiss="modal">
+                        Close
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BOOTSTRAP JS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <script>
+
+        /* SIDEBAR */
+
+        function toggleSidebar() {
+
+            document
+                .getElementById("sidebar")
+                .classList.toggle("show");
+
+        }
+
+
+        /* SEARCH + FILTER */
+
+        const searchInput =
+            document.getElementById("employeeSearch");
+
+        const departmentFilter =
+            document.getElementById("departmentFilter");
+
+        const employeeCards =
+            document.querySelectorAll(".employee-card");
+
+        const noResult =
+            document.getElementById("noResult");
+
+
+        function filterEmployees() {
+
+            const searchValue =
+                searchInput.value.toLowerCase().trim();
+
+            const departmentValue =
+                departmentFilter.value;
+
+            let visibleCount = 0;
+
+
+            employeeCards.forEach(card => {
+
+                const name =
+                    card.dataset.name.toLowerCase();
+
+                const department =
+                    card.dataset.department;
+
+
+                const matchesSearch =
+                    name.includes(searchValue);
+
+                const matchesDepartment =
+                    departmentValue === "all" ||
+                    department === departmentValue;
+
+
+                if (
+                    matchesSearch &&
+                    matchesDepartment
+                ) {
+
+                    card.style.display = "block";
+
+                    visibleCount++;
+
+                } else {
+
+                    card.style.display = "none";
+
+                }
+
+            });
+
+
+            if (visibleCount === 0) {
+
+                noResult.style.display = "block";
+
+            } else {
+
+                noResult.style.display = "none";
+
+            }
+
+        }
+
+
+        searchInput.addEventListener(
+            "input",
+            filterEmployees
+        );
+
+
+        departmentFilter.addEventListener(
+            "change",
+            filterEmployees
+        );
+
+
+        /* EMPLOYEE MODAL */
+
+        function showEmployee(
+            name,
+            role,
+            id,
+            department,
+            email,
+            manager,
+            initials
+        ) {
+
+            document.getElementById("modalName").innerText =
+                name;
+
+            document.getElementById("modalRole").innerText =
+                role;
+
+            document.getElementById("modalId").innerText =
+                id;
+
+            document.getElementById("modalDepartment").innerText =
+                department;
+
+            document.getElementById("modalEmail").innerText =
+                email;
+
+            document.getElementById("modalManager").innerText =
+                manager;
+
+            document.getElementById("modalAvatar").innerText =
+                initials;
+
+
+            const modal =
+                new bootstrap.Modal(
+                    document.getElementById("employeeModal")
+                );
+
+            modal.show();
+
+        }
+
+    </script>
+
+</body>
+
+</html>

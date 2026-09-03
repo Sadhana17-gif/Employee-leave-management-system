@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Settings - WorkEase</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", "Segoe UI", sans-serif;
+            background: #f5f7fb;
+            color: #172033;
+        }
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+            width: 255px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: #111827;
+            color: white;
+            z-index: 1000;
+            padding: 25px 16px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 12px 28px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .brand h5 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 19px;
+        }
+
+        .brand span {
+            display: block;
+            font-size: 9px;
+            color: #9ca3af;
+            letter-spacing: 1.5px;
+            margin-top: 2px;
+        }
+
+        .menu-title {
+            color: #6b7280;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            margin: 28px 12px 10px;
+            text-transform: uppercase;
+        }
+
+        .nav-link {
+            color: #9ca3af;
+            padding: 11px 13px;
+            border-radius: 10px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            transition: 0.25s;
+        }
+
+        .nav-link i {
+            font-size: 17px;
+        }
+
+        .nav-link:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .nav-link.active {
+            background: #4f46e5;
+            color: white;
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.25);
+        }
+
+        .sidebar-bottom {
+            position: absolute;
+            bottom: 20px;
+            left: 16px;
+            right: 16px;
+        }
+
+        .help-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            padding: 15px;
+            border-radius: 13px;
+        }
+
+        .help-box i {
+            color: #818cf8;
+            font-size: 20px;
+        }
+
+        .help-box p {
+            font-size: 12px;
+            color: #9ca3af;
+            margin: 8px 0;
+        }
+
+        .help-box a {
+            color: #a5b4fc;
+            font-size: 12px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* ================= MAIN ================= */
+
+        .main {
+            margin-left: 255px;
+            min-height: 100vh;
+        }
+
+        /* ================= TOPBAR ================= */
+
+        .topbar {
+            height: 76px;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            position: sticky;
+            top: 0;
+            z-index: 900;
+        }
+
+        .breadcrumb-text {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-bottom: 4px;
+        }
+
+        .page-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .search-box {
+            width: 210px;
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 13px;
+            top: 10px;
+            color: #9ca3af;
+        }
+
+        .search-box input {
+            width: 100%;
+            border: 1px solid #e5e7eb;
+            background: #f8fafc;
+            border-radius: 9px;
+            padding: 8px 12px 8px 36px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .notification {
+            width: 38px;
+            height: 38px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .notification i {
+            font-size: 17px;
+            color: #4b5563;
+        }
+
+        .notification-dot {
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            background: #ef4444;
+            border-radius: 50%;
+            right: 8px;
+            top: 7px;
+            border: 2px solid white;
+        }
+
+        .profile-mini {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding-left: 5px;
+        }
+
+        .avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .profile-mini strong {
+            display: block;
+            font-size: 13px;
+        }
+
+        .profile-mini span {
+            font-size: 10px;
+            color: #9ca3af;
+        }
+
+        /* ================= CONTENT ================= */
+
+        .content {
+            padding: 30px 32px 45px;
+        }
+
+        .heading-section {
+            margin-bottom: 25px;
+        }
+
+        .heading-section h3 {
+            font-size: 25px;
+            font-weight: 750;
+            margin-bottom: 6px;
+        }
+
+        .heading-section p {
+            color: #6b7280;
+            font-size: 13px;
+            margin: 0;
+        }
+
+        /* ================= SETTINGS NAV ================= */
+
+        .settings-nav {
+            background: white;
+            border: 1px solid #e8ebf1;
+            border-radius: 15px;
+            padding: 10px;
+            position: sticky;
+            top: 100px;
+        }
+
+        .settings-nav button {
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 12px;
+            text-align: left;
+            border-radius: 10px;
+            color: #6b7280;
+            font-size: 13px;
+            margin-bottom: 3px;
+            transition: 0.2s;
+        }
+
+        .settings-nav button i {
+            width: 25px;
+            font-size: 16px;
+        }
+
+        .settings-nav button:hover {
+            background: #f5f7ff;
+            color: #4f46e5;
+        }
+
+        .settings-nav button.active {
+            background: #eef2ff;
+            color: #4f46e5;
+            font-weight: 600;
+        }
+
+        /* ================= CARD ================= */
+
+        .settings-card {
+            background: white;
+            border: 1px solid #e8ebf1;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .card-header-custom {
+            padding: 19px 22px;
+            border-bottom: 1px solid #eef0f4;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-header-custom h5 {
+            margin: 0;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .card-header-custom p {
+            margin: 4px 0 0;
+            color: #9ca3af;
+            font-size: 11px;
+        }
+
+        .card-body-custom {
+            padding: 22px;
+        }
+
+        /* ================= PROFILE ================= */
+
+        .profile-banner {
+            background: linear-gradient(120deg, #eef2ff, #f5f3ff);
+            padding: 22px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border-radius: 12px;
+            margin-bottom: 22px;
+        }
+
+        .big-avatar {
+            width: 65px;
+            height: 65px;
+            border-radius: 17px;
+            background: linear-gradient(135deg, #4f46e5, #8b5cf6);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .profile-banner h5 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .profile-banner p {
+            margin: 4px 0 0;
+            color: #6b7280;
+            font-size: 12px;
+        }
+
+        .btn-change {
+            margin-left: auto;
+            border: 1px solid #c7d2fe;
+            background: white;
+            color: #4f46e5;
+            padding: 7px 13px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .form-label {
+            font-size: 11px;
+            color: #6b7280;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .form-control,
+        .form-select {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 12px;
+            padding: 9px 11px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #818cf8;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        /* ================= PREFERENCE ROW ================= */
+
+        .preference-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f1f4;
+        }
+
+        .preference-row:last-child {
+            border-bottom: none;
+        }
+
+        .preference-info strong {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 3px;
+        }
+
+        .preference-info span {
+            display: block;
+            color: #9ca3af;
+            font-size: 11px;
+        }
+
+        /* ================= SWITCH ================= */
+
+        .form-check-input {
+            width: 39px;
+            height: 21px;
+            cursor: pointer;
+        }
+
+        .form-check-input:checked {
+            background-color: #4f46e5;
+            border-color: #4f46e5;
+        }
+
+        /* ================= SECURITY ================= */
+
+        .security-item {
+            padding: 15px;
+            border: 1px solid #edf0f4;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            margin-bottom: 12px;
+        }
+
+        .security-icon {
+            width: 38px;
+            height: 38px;
+            background: #f3f4f6;
+            color: #4f46e5;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .security-item strong {
+            font-size: 12px;
+            display: block;
+        }
+
+        .security-item span {
+            color: #9ca3af;
+            font-size: 10px;
+        }
+
+        .security-item button {
+            margin-left: auto;
+            border: 1px solid #e5e7eb;
+            background: white;
+            padding: 6px 11px;
+            border-radius: 7px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        /* ================= DANGER ================= */
+
+        .danger-zone {
+            border: 1px solid #fecaca;
+            background: #fffafa;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .danger-zone h5 {
+            color: #dc2626;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .danger-zone p {
+            color: #9ca3af;
+            font-size: 11px;
+            margin-bottom: 15px;
+        }
+
+        .danger-btn {
+            border: 1px solid #fca5a5;
+            background: white;
+            color: #dc2626;
+            border-radius: 8px;
+            padding: 8px 14px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* ================= BUTTON ================= */
+
+        .save-btn {
+            background: #4f46e5;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            padding: 9px 17px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .save-btn:hover {
+            background: #4338ca;
+        }
+
+        .cancel-btn {
+            background: white;
+            border: 1px solid #e5e7eb;
+            color: #6b7280;
+            border-radius: 8px;
+            padding: 9px 17px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 7px;
+        }
+
+        /* ================= MOBILE ================= */
+
+        .mobile-menu {
+            display: none;
+            border: none;
+            background: transparent;
+            font-size: 22px;
+            color: #374151;
+        }
+
+        @media(max-width: 991px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+                transition: 0.3s;
+            }
+
+            .sidebar.show {
+                transform: translateX(0);
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .search-box {
+                display: none;
+            }
+
+            .content {
+                padding: 25px 18px;
+            }
+
+            .settings-nav {
+                position: static;
+                margin-bottom: 20px;
+            }
+        }
+
+        @media(max-width: 576px) {
+
+            .topbar {
+                padding: 0 17px;
+            }
+
+            .profile-mini>div:last-child {
+                display: none;
+            }
+
+            .top-actions {
+                gap: 8px;
+            }
+
+            .heading-section h3 {
+                font-size: 21px;
+            }
+
+            .profile-banner {
+                align-items: flex-start;
+                flex-wrap: wrap;
+            }
+
+            .btn-change {
+                margin-left: 0;
+            }
+
+            .card-body-custom {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">
+                <i class="bi bi-calendar2-check"></i>
+            </div>
+
+            <div>
+                <h5>WorkEase</h5>
+                <span>EMPLOYEE PORTAL</span>
+            </div>
+        </div>
+
+        <div class="menu-title">Workspace</div>
+
+        <a href="index.html" class="nav-link">
+            <i class="bi bi-grid-1x2"></i>
+            Dashboard
+        </a>
+
+        <a href="apply-leave.html" class="nav-link">
+            <i class="bi bi-plus-square"></i>
+            Apply Leave
+        </a>
+
+        <a href="my-leaves.html" class="nav-link">
+            <i class="bi bi-file-earmark-text"></i>
+            My Requests
+        </a>
+
+        <a href="calendar.html" class="nav-link">
+            <i class="bi bi-calendar3"></i>
+            Team Calendar
+        </a>
+
+        <div class="menu-title">Management</div>
+
+        <a href="employees.html" class="nav-link">
+            <i class="bi bi-people"></i>
+            Employees
+        </a>
+
+        <a href="reports.html" class="nav-link">
+            <i class="bi bi-bar-chart"></i>
+            Reports
+        </a>
+
+        <a href="settings.html" class="nav-link active">
+            <i class="bi bi-sliders"></i>
+            Settings
+        </a>
+
+        <div class="sidebar-bottom">
+
+            <div class="help-box">
+                <i class="bi bi-headset"></i>
+                <p>Need help with your leave request?</p>
+                <a href="#">Contact Support →</a>
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="d-flex align-items-center gap-3">
+
+                <button class="mobile-menu" onclick="toggleSidebar()">
+                    <i class="bi bi-list"></i>
+                </button>
+
+                <div>
+                    <div class="breadcrumb-text">Workspace / Settings</div>
+                    <h4 class="page-title">Settings</h4>
+                </div>
+
+            </div>
+
+            <div class="top-actions">
+
+                <div class="search-box">
+                    <i class="bi bi-search"></i>
+                    <input type="text" placeholder="Search settings...">
+                </div>
+
+                <div class="notification">
+                    <i class="bi bi-bell"></i>
+                    <span class="notification-dot"></span>
+                </div>
+
+                <div class="profile-mini">
+
+                    <div class="avatar">SA</div>
+
+                    <div>
+                        <strong>Sadhana</strong>
+                        <span>Employee</span>
+                    </div>
+
+                    <i class="bi bi-chevron-down text-muted small"></i>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- CONTENT -->
+
+        <section class="content">
+
+            <div class="heading-section">
+                <h3>Account Settings</h3>
+                <p>Manage your profile, preferences, notifications and account security.</p>
+            </div>
+
+
+            <div class="row g-4">
+
+                <!-- SETTINGS MENU -->
+
+                <div class="col-lg-3">
+
+                    <div class="settings-nav">
+
+                        <button class="active">
+                            <i class="bi bi-person"></i>
+                            Profile
+                        </button>
+
+                        <button>
+                            <i class="bi bi-sliders2"></i>
+                            Leave Preferences
+                        </button>
+
+                        <button>
+                            <i class="bi bi-bell"></i>
+                            Notifications
+                        </button>
+
+                        <button>
+                            <i class="bi bi-shield-lock"></i>
+                            Security
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SETTINGS CONTENT -->
+
+                <div class="col-lg-9">
+
+
+                    <!-- PROFILE -->
+
+                    <div class="settings-card">
+
+                        <div class="card-header-custom">
+
+                            <div>
+                                <h5>Profile Information</h5>
+                                <p>Update your personal and employee information.</p>
+                            </div>
+
+                            <i class="bi bi-person-badge text-muted"></i>
+
+                        </div>
+
+
+                        <div class="card-body-custom">
+
+                            <div class="profile-banner">
+
+                                <div class="big-avatar">
+                                    SA
+                                </div>
+
+                                <div>
+                                    <h5>Sadhana</h5>
+                                    <p>EMP024 · Computer Science</p>
+                                </div>
+
+                                <button class="btn-change" onclick="changePhoto()">
+                                    <i class="bi bi-camera"></i>
+                                    Change Photo
+                                </button>
+
+                            </div>
+
+
+                            <div class="row g-3">
+
+                                <div class="col-md-6">
+
+                                    <label class="form-label">
+                                        Full Name
+                                    </label>
+
+                                    <input type="text" class="form-control" value="Sadhana">
+                                </div>
+
+
+                                <div class="col-md-6">
+
+                                    <label class="form-label">
+                                        Employee ID
+                                    </label>
+
+                                    <input type="text" class="form-control" value="EMP024" readonly>
+                                </div>
+
+
+                                <div class="col-md-6">
+
+                                    <label class="form-label">
+                                        Email Address
+                                    </label>
+
+                                    <input type="email" class="form-control" value="sadhana@workease.com">
+                                </div>
+
+
+                                <div class="col-md-6">
+
+                                    <label class="form-label">
+                                        Phone Number
+                                    </label>
+
+                                    <input type="text" class="form-control" value="+91 98765 43210">
+                                </div>
+
+
+                                <div class="col-md-6">
+
+                                    <label class="form-label">
+                                        Department
+                                    </label>
+
+                                    <input type="text" class="form-control" value="Computer Science" readonly>
+                                </div>
+
+
+                                <div class="col-md-6">
+
+                                    <label class="form-label">
+                                        Reporting Manager
+                                    </label>
+
+                                    <input type="text" class="form-control" value="Priya Sharma" readonly>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="px-4 pb-4 text-end">
+
+                            <button class="cancel-btn">
+                                Cancel
+                            </button>
+
+                            <button class="save-btn" onclick="saveProfile()">
+                                <i class="bi bi-check2"></i>
+                                Save Changes
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- LEAVE PREFERENCES -->
+
+                    <div class="settings-card">
+
+                        <div class="card-header-custom">
+
+                            <div>
+                                <h5>Leave Preferences</h5>
+                                <p>Customize how your leave requests are handled.</p>
+                            </div>
+
+                            <i class="bi bi-calendar-check text-muted"></i>
+
+                        </div>
+
+
+                        <div class="card-body-custom">
+
+                            <div class="row g-3 mb-2">
+
+                                <div class="col-md-6">
+
+                                    <label class="form-label">
+                                        Default Leave Type
+                                    </label>
+
+                                    <select class="form-select">
+                                        <option>Annual Leave</option>
+                                        <option>Sick Leave</option>
+                                        <option>Casual Leave</option>
+                                        <option>Emergency Leave</option>
+                                    </select>
+
+                                </div>
+
+
+                                <div class="col-md-6">
+
+                                    <label class="form-label">
+                                        Working Schedule
+                                    </label>
+
+                                    <select class="form-select">
+                                        <option>Monday - Friday</option>
+                                        <option>Monday - Saturday</option>
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="preference-row">
+
+                                <div class="preference-info">
+
+                                    <strong>Exclude weekends automatically</strong>
+
+                                    <span>
+                                        Weekend days will not be counted as leave days.
+                                    </span>
+
+                                </div>
+
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" checked>
+                                </div>
+
+                            </div>
+
+
+                            <div class="preference-row">
+
+                                <div class="preference-info">
+
+                                    <strong>Show team availability</strong>
+
+                                    <span>
+                                        Display team leave information while applying.
+                                    </span>
+
+                                </div>
+
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" checked>
+                                </div>
+
+                            </div>
+
+
+                            <div class="preference-row">
+
+                                <div class="preference-info">
+
+                                    <strong>Leave reminder</strong>
+
+                                    <span>
+                                        Get reminded before your leave begins.
+                                    </span>
+
+                                </div>
+
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" checked>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- NOTIFICATIONS -->
+
+                    <div class="settings-card">
+
+                        <div class="card-header-custom">
+
+                            <div>
+                                <h5>Notification Preferences</h5>
+                                <p>Choose which updates you want to receive.</p>
+                            </div>
+
+                            <i class="bi bi-bell text-muted"></i>
+
+                        </div>
+
+
+                        <div class="card-body-custom">
+
+                            <div class="preference-row">
+
+                                <div class="preference-info">
+
+                                    <strong>Leave request updates</strong>
+
+                                    <span>
+                                        Receive notifications when your request status changes.
+                                    </span>
+
+                                </div>
+
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input notification-toggle" type="checkbox" checked>
+                                </div>
+
+                            </div>
+
+
+                            <div class="preference-row">
+
+                                <div class="preference-info">
+
+                                    <strong>Approval notifications</strong>
+
+                                    <span>
+                                        Get notified when your manager approves or rejects leave.
+                                    </span>
+
+                                </div>
+
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input notification-toggle" type="checkbox" checked>
+                                </div>
+
+                            </div>
+
+
+                            <div class="preference-row">
+
+                                <div class="preference-info">
+
+                                    <strong>Team updates</strong>
+
+                                    <span>
+                                        Receive important updates about your department.
+                                    </span>
+
+                                </div>
+
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input notification-toggle" type="checkbox">
+                                </div>
+
+                            </div>
+
+
+                            <div class="preference-row">
+
+                                <div class="preference-info">
+
+                                    <strong>Leave reminders</strong>
+
+                                    <span>
+                                        Receive reminders for upcoming leave dates.
+                                    </span>
+
+                                </div>
+
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input notification-toggle" type="checkbox" checked>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SECURITY -->
+
+                    <div class="settings-card">
+
+                        <div class="card-header-custom">
+
+                            <div>
+                                <h5>Security</h5>
+                                <p>Protect your account and manage active sessions.</p>
+                            </div>
+
+                            <i class="bi bi-shield-check text-muted"></i>
+
+                        </div>
+
+
+                        <div class="card-body-custom">
+
+                            <div class="security-item">
+
+                                <div class="security-icon">
+                                    <i class="bi bi-key"></i>
+                                </div>
+
+                                <div>
+                                    <strong>Password</strong>
+                                    <span>Last changed 45 days ago</span>
+                                </div>
+
+                                <button onclick="changePassword()">
+                                    Change
+                                </button>
+
+                            </div>
+
+
+                            <div class="security-item">
+
+                                <div class="security-icon">
+                                    <i class="bi bi-phone"></i>
+                                </div>
+
+                                <div>
+                                    <strong>Two-factor authentication</strong>
+                                    <span>Add an extra layer of account protection.</span>
+                                </div>
+
+                                <div class="form-check form-switch ms-auto">
+                                    <input class="form-check-input" type="checkbox" id="twoFactor">
+                                </div>
+
+                            </div>
+
+
+                            <div class="security-item mb-0">
+
+                                <div class="security-icon">
+                                    <i class="bi bi-laptop"></i>
+                                </div>
+
+                                <div>
+                                    <strong>Active sessions</strong>
+                                    <span>2 devices currently signed in</span>
+                                </div>
+
+                                <button onclick="logoutSessions()">
+                                    Manage
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- DANGER ZONE -->
+
+                    <div class="danger-zone">
+
+                        <h5>
+                            <i class="bi bi-exclamation-triangle"></i>
+                            Danger Zone
+                        </h5>
+
+                        <p>
+                            These actions affect your account access. Please proceed carefully.
+                        </p>
+
+                        <button class="danger-btn" onclick="logoutAll()">
+                            <i class="bi bi-box-arrow-right"></i>
+                            Sign out from all devices
+                        </button>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= TOAST ================= -->
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+
+        <div id="successToast" class="toast border-0 shadow" role="alert">
+
+            <div class="toast-body d-flex align-items-center gap-2">
+
+                <i class="bi bi-check-circle-fill text-success"></i>
+
+                <span id="toastMessage">
+                    Settings saved successfully.
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Bootstrap JS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <script>
+
+        /* ================= SIDEBAR ================= */
+
+        function toggleSidebar() {
+
+            document
+                .getElementById("sidebar")
+                .classList.toggle("show");
+
+        }
+
+
+        /* ================= TOAST ================= */
+
+        function showToast(message) {
+
+            document.getElementById("toastMessage").textContent = message;
+
+            const toastElement =
+                document.getElementById("successToast");
+
+            const toast =
+                new bootstrap.Toast(toastElement);
+
+            toast.show();
+
+        }
+
+
+        /* ================= PROFILE SAVE ================= */
+
+        function saveProfile() {
+
+            showToast("Profile changes saved successfully.");
+
+        }
+
+
+        /* ================= PHOTO ================= */
+
+        function changePhoto() {
+
+            showToast("Profile photo upload option opened.");
+
+        }
+
+
+        /* ================= PASSWORD ================= */
+
+        function changePassword() {
+
+            const newPassword =
+                prompt("Enter your new password:");
+
+            if (newPassword === null) {
+                return;
+            }
+
+            if (newPassword.length < 6) {
+
+                alert("Password must contain at least 6 characters.");
+
+                return;
+            }
+
+            showToast("Password updated successfully.");
+
+        }
+
+
+        /* ================= SESSIONS ================= */
+
+        function logoutSessions() {
+
+            const confirmLogout =
+                confirm("Do you want to manage active sessions?");
+
+            if (confirmLogout) {
+
+                showToast("Active sessions panel opened.");
+
+            }
+
+        }
+
+
+        /* ================= LOGOUT ALL ================= */
+
+        function logoutAll() {
+
+            const confirmation =
+                confirm(
+                    "Are you sure you want to sign out from all devices?"
+                );
+
+            if (confirmation) {
+
+                showToast("Signed out from all other devices.");
+
+            }
+
+        }
+
+
+        /* ================= NOTIFICATIONS ================= */
+
+        document
+            .querySelectorAll(".notification-toggle")
+            .forEach(function (toggle) {
+
+                toggle.addEventListener("change", function () {
+
+                    if (this.checked) {
+
+                        showToast("Notification preference enabled.");
+
+                    } else {
+
+                        showToast("Notification preference disabled.");
+
+                    }
+
+                });
+
+            });
+
+
+        /* ================= SETTINGS MENU ================= */
+
+        document
+            .querySelectorAll(".settings-nav button")
+            .forEach(function (button) {
+
+                button.addEventListener("click", function () {
+
+                    document
+                        .querySelectorAll(".settings-nav button")
+                        .forEach(function (item) {
+
+                            item.classList.remove("active");
+
+                        });
+
+                    this.classList.add("active");
+
+                    showToast(
+                        this.innerText.trim() + " settings selected."
+                    );
+
+                });
+
+            });
+
+
+        /* ================= 2FA ================= */
+
+        document
+            .getElementById("twoFactor")
+            .addEventListener("change", function () {
+
+                if (this.checked) {
+
+                    showToast("Two-factor authentication enabled.");
+
+                } else {
+
+                    showToast("Two-factor authentication disabled.");
+
+                }
+
+            });
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile - WorkEase</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", "Segoe UI", sans-serif;
+            background: #f5f7fb;
+            color: #172033;
+        }
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+            width: 255px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: #111827;
+            color: white;
+            z-index: 1000;
+            padding: 25px 16px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 12px 28px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .brand h5 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 19px;
+        }
+
+        .brand span {
+            display: block;
+            font-size: 9px;
+            color: #9ca3af;
+            letter-spacing: 1.5px;
+            margin-top: 2px;
+        }
+
+        .menu-title {
+            color: #6b7280;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            margin: 28px 12px 10px;
+            text-transform: uppercase;
+        }
+
+        .nav-link {
+            color: #9ca3af;
+            padding: 11px 13px;
+            border-radius: 10px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            transition: .25s;
+            text-decoration: none;
+        }
+
+        .nav-link i {
+            font-size: 17px;
+        }
+
+        .nav-link:hover {
+            color: white;
+            background: rgba(255, 255, 255, .06);
+        }
+
+        .nav-link.active {
+            color: white;
+            background: #4f46e5;
+            box-shadow: 0 8px 20px rgba(79, 70, 229, .25);
+        }
+
+        .sidebar-bottom {
+            position: absolute;
+            bottom: 20px;
+            left: 16px;
+            right: 16px;
+        }
+
+        .help-box {
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .07);
+            padding: 15px;
+            border-radius: 13px;
+        }
+
+        .help-box i {
+            color: #818cf8;
+            font-size: 20px;
+        }
+
+        .help-box p {
+            font-size: 12px;
+            color: #9ca3af;
+            margin: 8px 0;
+        }
+
+        .help-box a {
+            color: #a5b4fc;
+            font-size: 12px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* ================= MAIN ================= */
+
+        .main {
+            margin-left: 255px;
+            min-height: 100vh;
+        }
+
+        /* ================= TOPBAR ================= */
+
+        .topbar {
+            height: 76px;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            position: sticky;
+            top: 0;
+            z-index: 900;
+        }
+
+        .breadcrumb-text {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-bottom: 4px;
+        }
+
+        .page-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .search-box {
+            width: 210px;
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 13px;
+            top: 10px;
+            color: #9ca3af;
+        }
+
+        .search-box input {
+            width: 100%;
+            border: 1px solid #e5e7eb;
+            background: #f8fafc;
+            border-radius: 9px;
+            padding: 8px 12px 8px 36px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .notification {
+            width: 38px;
+            height: 38px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .notification i {
+            font-size: 17px;
+            color: #4b5563;
+        }
+
+        .notification-dot {
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            background: #ef4444;
+            border-radius: 50%;
+            right: 8px;
+            top: 7px;
+            border: 2px solid white;
+        }
+
+        .profile-mini {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .profile-mini strong {
+            display: block;
+            font-size: 13px;
+        }
+
+        .profile-mini span {
+            font-size: 10px;
+            color: #9ca3af;
+        }
+
+        /* ================= CONTENT ================= */
+
+        .content {
+            padding: 30px 32px 45px;
+        }
+
+        .heading-section {
+            margin-bottom: 25px;
+        }
+
+        .heading-section h3 {
+            font-size: 25px;
+            font-weight: 750;
+            margin-bottom: 6px;
+        }
+
+        .heading-section p {
+            color: #6b7280;
+            font-size: 13px;
+            margin: 0;
+        }
+
+        /* ================= PROFILE HERO ================= */
+
+        .profile-hero {
+            background: linear-gradient(120deg, #111827, #1f2937);
+            border-radius: 18px;
+            padding: 30px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 22px;
+        }
+
+        .profile-hero::after {
+            content: "";
+            position: absolute;
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, .15);
+            right: -60px;
+            top: -100px;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-photo {
+            width: 90px;
+            height: 90px;
+            border-radius: 23px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 29px;
+            font-weight: 700;
+            border: 4px solid rgba(255, 255, 255, .12);
+        }
+
+        .hero-info {
+            margin-left: 20px;
+        }
+
+        .hero-info h2 {
+            font-size: 24px;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .hero-info p {
+            margin: 0;
+            color: #cbd5e1;
+            font-size: 13px;
+        }
+
+        .employee-badge {
+            display: inline-block;
+            margin-top: 10px;
+            background: rgba(255, 255, 255, .1);
+            border: 1px solid rgba(255, 255, 255, .12);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+        }
+
+        .hero-actions {
+            margin-left: auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .edit-profile {
+            border: 1px solid rgba(255, 255, 255, .2);
+            background: rgba(255, 255, 255, .08);
+            color: white;
+            padding: 9px 15px;
+            border-radius: 9px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .edit-profile:hover {
+            background: rgba(255, 255, 255, .15);
+        }
+
+        /* ================= STAT CARDS ================= */
+
+        .stat-card {
+            background: white;
+            border: 1px solid #e8ebf1;
+            border-radius: 14px;
+            padding: 19px;
+            height: 100%;
+        }
+
+        .stat-icon {
+            width: 39px;
+            height: 39px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eef2ff;
+            color: #4f46e5;
+            margin-bottom: 13px;
+        }
+
+        .stat-card h4 {
+            font-size: 22px;
+            margin: 0;
+            font-weight: 750;
+        }
+
+        .stat-card p {
+            color: #9ca3af;
+            font-size: 11px;
+            margin: 4px 0 0;
+        }
+
+        /* ================= COMMON CARD ================= */
+
+        .info-card {
+            background: white;
+            border: 1px solid #e8ebf1;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            padding: 18px 21px;
+            border-bottom: 1px solid #eef0f4;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title h5 {
+            margin: 0;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .card-title i {
+            color: #9ca3af;
+        }
+
+        .card-body {
+            padding: 21px;
+        }
+
+        /* ================= DETAILS ================= */
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 13px 0;
+            border-bottom: 1px solid #f0f1f4;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: #9ca3af;
+            font-size: 11px;
+        }
+
+        .detail-value {
+            font-size: 12px;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        /* ================= LEAVE BALANCE ================= */
+
+        .leave-item {
+            margin-bottom: 18px;
+        }
+
+        .leave-top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 7px;
+        }
+
+        .leave-top span:first-child {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .leave-top span:last-child {
+            color: #6b7280;
+            font-size: 10px;
+        }
+
+        .progress {
+            height: 7px;
+            background: #eef0f4;
+            border-radius: 10px;
+        }
+
+        .progress-bar {
+            border-radius: 10px;
+            background: #4f46e5;
+        }
+
+        .progress-bar.sick {
+            background: #f59e0b;
+        }
+
+        .progress-bar.casual {
+            background: #10b981;
+        }
+
+        /* ================= MANAGER ================= */
+
+        .manager-box {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .manager-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 13px;
+            background: #ede9fe;
+            color: #7c3aed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .manager-box strong {
+            font-size: 13px;
+        }
+
+        .manager-box span {
+            display: block;
+            font-size: 10px;
+            color: #9ca3af;
+            margin-top: 3px;
+        }
+
+        .contact-manager {
+            margin-left: auto;
+            border: 1px solid #e5e7eb;
+            background: white;
+            border-radius: 8px;
+            padding: 7px 10px;
+            font-size: 10px;
+            font-weight: 600;
+            color: #4f46e5;
+        }
+
+        /* ================= ACTIVITY ================= */
+
+        .activity-item {
+            display: flex;
+            gap: 12px;
+            padding: 13px 0;
+            border-bottom: 1px solid #f0f1f4;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 33px;
+            height: 33px;
+            border-radius: 9px;
+            background: #eef2ff;
+            color: #4f46e5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .activity-info strong {
+            font-size: 11px;
+            display: block;
+        }
+
+        .activity-info span {
+            display: block;
+            font-size: 9px;
+            color: #9ca3af;
+            margin-top: 3px;
+        }
+
+        /* ================= MOBILE ================= */
+
+        .mobile-menu {
+            display: none;
+            border: none;
+            background: transparent;
+            font-size: 22px;
+            color: #374151;
+        }
+
+        @media(max-width:991px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+                transition: .3s;
+            }
+
+            .sidebar.show {
+                transform: translateX(0);
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .search-box {
+                display: none;
+            }
+
+            .content {
+                padding: 25px 18px;
+            }
+
+        }
+
+        @media(max-width:576px) {
+
+            .topbar {
+                padding: 0 17px;
+            }
+
+            .profile-mini>div:last-child,
+            .profile-mini>i {
+                display: none;
+            }
+
+            .top-actions {
+                gap: 8px;
+            }
+
+            .profile-hero {
+                padding: 22px;
+            }
+
+            .hero-content {
+                align-items: flex-start;
+            }
+
+            .profile-photo {
+                width: 70px;
+                height: 70px;
+                font-size: 22px;
+            }
+
+            .hero-info {
+                margin-left: 13px;
+            }
+
+            .hero-info h2 {
+                font-size: 18px;
+            }
+
+            .hero-actions {
+                display: none;
+            }
+
+            .heading-section h3 {
+                font-size: 21px;
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                <i class="bi bi-calendar2-check"></i>
+            </div>
+
+            <div>
+                <h5>WorkEase</h5>
+                <span>EMPLOYEE PORTAL</span>
+            </div>
+
+        </div>
+
+
+        <div class="menu-title">
+            Workspace
+        </div>
+
+        <a href="index.html" class="nav-link">
+            <i class="bi bi-grid-1x2"></i>
+            Dashboard
+        </a>
+
+        <a href="apply-leave.html" class="nav-link">
+            <i class="bi bi-plus-square"></i>
+            Apply Leave
+        </a>
+
+        <a href="my-leaves.html" class="nav-link">
+            <i class="bi bi-file-earmark-text"></i>
+            My Requests
+        </a>
+
+        <a href="calendar.html" class="nav-link">
+            <i class="bi bi-calendar3"></i>
+            Team Calendar
+        </a>
+
+
+        <div class="menu-title">
+            Management
+        </div>
+
+        <a href="employees.html" class="nav-link">
+            <i class="bi bi-people"></i>
+            Employees
+        </a>
+
+        <a href="reports.html" class="nav-link">
+            <i class="bi bi-bar-chart"></i>
+            Reports
+        </a>
+
+        <a href="settings.html" class="nav-link">
+            <i class="bi bi-sliders"></i>
+            Settings
+        </a>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="help-box">
+
+                <i class="bi bi-headset"></i>
+
+                <p>
+                    Need help with your leave request?
+                </p>
+
+                <a href="#">
+                    Contact Support →
+                </a>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="d-flex align-items-center gap-3">
+
+                <button class="mobile-menu" onclick="toggleSidebar()">
+
+                    <i class="bi bi-list"></i>
+
+                </button>
+
+                <div>
+
+                    <div class="breadcrumb-text">
+                        Workspace / My Profile
+                    </div>
+
+                    <h4 class="page-title">
+                        My Profile
+                    </h4>
+
+                </div>
+
+            </div>
+
+
+            <div class="top-actions">
+
+                <div class="search-box">
+
+                    <i class="bi bi-search"></i>
+
+                    <input type="text" placeholder="Search...">
+
+                </div>
+
+
+                <div class="notification">
+
+                    <i class="bi bi-bell"></i>
+
+                    <span class="notification-dot"></span>
+
+                </div>
+
+
+                <div class="profile-mini">
+
+                    <div class="avatar">
+                        SA
+                    </div>
+
+                    <div>
+
+                        <strong>Sadhana</strong>
+
+                        <span>
+                            Employee
+                        </span>
+
+                    </div>
+
+                    <i class="bi bi-chevron-down text-muted small"></i>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= CONTENT ================= -->
+
+        <section class="content">
+
+
+            <div class="heading-section">
+
+                <h3>
+                    Employee Profile
+                </h3>
+
+                <p>
+                    View your employee information, leave balance and recent activity.
+                </p>
+
+            </div>
+
+
+            <!-- PROFILE HERO -->
+
+            <div class="profile-hero">
+
+                <div class="hero-content">
+
+                    <div class="profile-photo">
+                        SA
+                    </div>
+
+
+                    <div class="hero-info">
+
+                        <h2>
+                            Sadhana
+                        </h2>
+
+                        <p>
+                            Computer Science · Software Engineering
+                        </p>
+
+                        <span class="employee-badge">
+                            <i class="bi bi-person-check"></i>
+                            EMP024 · Active Employee
+                        </span>
+
+                    </div>
+
+
+                    <div class="hero-actions">
+
+                        <button class="edit-profile" onclick="editProfile()">
+
+                            <i class="bi bi-pencil"></i>
+                            Edit Profile
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- STATS -->
+
+            <div class="row g-3 mb-4">
+
+
+                <div class="col-xl-3 col-md-6">
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            <i class="bi bi-calendar-check"></i>
+                        </div>
+
+                        <h4>
+                            18
+                        </h4>
+
+                        <p>
+                            Leave Days Used
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-xl-3 col-md-6">
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            <i class="bi bi-calendar2-week"></i>
+                        </div>
+
+                        <h4>
+                            24
+                        </h4>
+
+                        <p>
+                            Leave Days Available
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-xl-3 col-md-6">
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            <i class="bi bi-file-earmark-check"></i>
+                        </div>
+
+                        <h4>
+                            26
+                        </h4>
+
+                        <p>
+                            Total Requests
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-xl-3 col-md-6">
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            <i class="bi bi-clock-history"></i>
+                        </div>
+
+                        <h4>
+                            2
+                        </h4>
+
+                        <p>
+                            Pending Requests
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MAIN GRID -->
+
+            <div class="row g-4">
+
+
+                <!-- LEFT -->
+
+                <div class="col-lg-7">
+
+
+                    <!-- PERSONAL INFORMATION -->
+
+                    <div class="info-card">
+
+                        <div class="card-title">
+
+                            <h5>
+                                Personal Information
+                            </h5>
+
+                            <i class="bi bi-person-vcard"></i>
+
+                        </div>
+
+
+                        <div class="card-body">
+
+                            <div class="detail-row">
+
+                                <span class="detail-label">
+                                    Full Name
+                                </span>
+
+                                <span class="detail-value">
+                                    Sadhana
+                                </span>
+
+                            </div>
+
+
+                            <div class="detail-row">
+
+                                <span class="detail-label">
+                                    Employee ID
+                                </span>
+
+                                <span class="detail-value">
+                                    EMP024
+                                </span>
+
+                            </div>
+
+
+                            <div class="detail-row">
+
+                                <span class="detail-label">
+                                    Email
+                                </span>
+
+                                <span class="detail-value">
+                                    sadhana@workease.com
+                                </span>
+
+                            </div>
+
+
+                            <div class="detail-row">
+
+                                <span class="detail-label">
+                                    Phone
+                                </span>
+
+                                <span class="detail-value">
+                                    +91 98765 43210
+                                </span>
+
+                            </div>
+
+
+                            <div class="detail-row">
+
+                                <span class="detail-label">
+                                    Department
+                                </span>
+
+                                <span class="detail-value">
+                                    Computer Science
+                                </span>
+
+                            </div>
+
+
+                            <div class="detail-row">
+
+                                <span class="detail-label">
+                                    Joining Date
+                                </span>
+
+                                <span class="detail-value">
+                                    15 June 2024
+                                </span>
+
+                            </div>
+
+
+                            <div class="detail-row">
+
+                                <span class="detail-label">
+                                    Employment Type
+                                </span>
+
+                                <span class="detail-value">
+                                    Full Time
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- LEAVE BALANCE -->
+
+                    <div class="info-card">
+
+                        <div class="card-title">
+
+                            <h5>
+                                Leave Balance
+                            </h5>
+
+                            <i class="bi bi-pie-chart"></i>
+
+                        </div>
+
+
+                        <div class="card-body">
+
+
+                            <div class="leave-item">
+
+                                <div class="leave-top">
+
+                                    <span>
+                                        Annual Leave
+                                    </span>
+
+                                    <span>
+                                        12 / 20 days
+                                    </span>
+
+                                </div>
+
+                                <div class="progress">
+
+                                    <div class="progress-bar" style="width:60%">
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="leave-item">
+
+                                <div class="leave-top">
+
+                                    <span>
+                                        Sick Leave
+                                    </span>
+
+                                    <span>
+                                        4 / 10 days
+                                    </span>
+
+                                </div>
+
+                                <div class="progress">
+
+                                    <div class="progress-bar sick" style="width:40%">
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="leave-item mb-0">
+
+                                <div class="leave-top">
+
+                                    <span>
+                                        Casual Leave
+                                    </span>
+
+                                    <span>
+                                        2 / 8 days
+                                    </span>
+
+                                </div>
+
+                                <div class="progress">
+
+                                    <div class="progress-bar casual" style="width:25%">
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RIGHT -->
+
+                <div class="col-lg-5">
+
+
+                    <!-- MANAGER -->
+
+                    <div class="info-card">
+
+                        <div class="card-title">
+
+                            <h5>
+                                Reporting Manager
+                            </h5>
+
+                            <i class="bi bi-person-workspace"></i>
+
+                        </div>
+
+
+                        <div class="card-body">
+
+                            <div class="manager-box">
+
+                                <div class="manager-avatar">
+                                    PS
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Priya Sharma
+                                    </strong>
+
+                                    <span>
+                                        Engineering Manager
+                                    </span>
+
+                                </div>
+
+                                <button class="contact-manager" onclick="contactManager()">
+
+                                    Contact
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- RECENT ACTIVITY -->
+
+                    <div class="info-card">
+
+                        <div class="card-title">
+
+                            <h5>
+                                Recent Activity
+                            </h5>
+
+                            <i class="bi bi-activity"></i>
+
+                        </div>
+
+
+                        <div class="card-body">
+
+
+                            <div class="activity-item">
+
+                                <div class="activity-icon">
+                                    <i class="bi bi-check-lg"></i>
+                                </div>
+
+                                <div class="activity-info">
+
+                                    <strong>
+                                        Leave request approved
+                                    </strong>
+
+                                    <span>
+                                        Annual Leave · 2 days ago
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="activity-item">
+
+                                <div class="activity-icon">
+                                    <i class="bi bi-send"></i>
+                                </div>
+
+                                <div class="activity-info">
+
+                                    <strong>
+                                        Leave request submitted
+                                    </strong>
+
+                                    <span>
+                                        Casual Leave · 5 days ago
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="activity-item">
+
+                                <div class="activity-icon">
+                                    <i class="bi bi-pencil"></i>
+                                </div>
+
+                                <div class="activity-info">
+
+                                    <strong>
+                                        Profile information updated
+                                    </strong>
+
+                                    <span>
+                                        12 August 2026
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="activity-item">
+
+                                <div class="activity-icon">
+                                    <i class="bi bi-shield-check"></i>
+                                </div>
+
+                                <div class="activity-info">
+
+                                    <strong>
+                                        Password updated
+                                    </strong>
+
+                                    <span>
+                                        02 August 2026
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ACCOUNT STATUS -->
+
+                    <div class="info-card">
+
+                        <div class="card-title">
+
+                            <h5>
+                                Account Status
+                            </h5>
+
+                            <i class="bi bi-shield-check"></i>
+
+                        </div>
+
+
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between align-items-center">
+
+                                <div>
+
+                                    <strong style="font-size:12px;">
+                                        Account Active
+                                    </strong>
+
+                                    <div style="font-size:10px;color:#9ca3af;margin-top:3px;">
+
+                                        Your employee account is active.
+
+                                    </div>
+
+                                </div>
+
+                                <span class="badge rounded-pill bg-success-subtle text-success px-3 py-2"
+                                    style="font-size:10px;">
+
+                                    Active
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= BOOTSTRAP ================= -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <script>
+
+        function toggleSidebar() {
+
+            document
+                .getElementById("sidebar")
+                .classList.toggle("show");
+
+        }
+
+
+        function editProfile() {
+
+            window.location.href = "settings.html";
+
+        }
+
+
+        function contactManager() {
+
+            alert(
+                "Manager: Priya Sharma\nEmail: priya.sharma@workease.com"
+            );
+
+        }
+
+    </script>
+
+</body>
+
+</html>
